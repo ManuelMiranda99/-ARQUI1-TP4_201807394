@@ -14,3 +14,19 @@ getChar macro
     mov ah, 01h
     int 21h
 endm
+
+; GET TEXT UNTIL THE USER WRITE ENTER
+getText macro string
+    xor si, si
+
+    getCharacter:
+        getChar
+        cmp al, 0dh
+            je EndGC
+        mov string[si], al
+        inc si
+        jmp getCharacter
+    EndGC:
+        mov al, 24h
+        mov string[si], al
+endm
