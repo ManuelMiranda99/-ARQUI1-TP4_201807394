@@ -17,6 +17,7 @@ endm
 
 ; GET TEXT UNTIL THE USER WRITE ENTER
 getText macro string
+    local getCharacter, EndGC
     xor si, si
 
     getCharacter:
