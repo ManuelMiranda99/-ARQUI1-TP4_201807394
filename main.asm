@@ -61,7 +61,7 @@ main proc
         getChar
         print newLine
         ; COMPARE THE CHAR THAT THE USER WRITE IN THE PROGRAM
-        cmp al, '1'         ; START GAME
+        cmp al, '1'         ; START GAME            
             je Game
         cmp al, '2'         ; LOAD GAME
             je LoadGame
@@ -70,10 +70,10 @@ main proc
     
     Game:
         jmp DrawTable
-        getChar
     LoadGame:
-
+        ClearConsole
     DrawTable:
+        ClearConsole
         print blacksTurn
         print newLine
         print f8
@@ -92,6 +92,8 @@ main proc
         print f1_5
         print f1
         print f0
+        moveCursor 00h, 00h
+        getChar
     Exit:
         mov ah, 4ch     ; END PROGRAM
         xor al, al

@@ -60,6 +60,15 @@ moveCursor macro row, column
     int 10h
 endm
 
+; CLEAN CONSOLE
+ClearConsole macro
+    local ClearConsoleRepeat
+    mov dx, 50h
+    ClearConsoleRepeat:
+        print newLine
+    Loop ClearConsoleRepeat
+endm
+
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\     FILES     \\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
