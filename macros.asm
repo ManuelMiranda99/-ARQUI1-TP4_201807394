@@ -51,6 +51,19 @@ getText macro string
         mov string[si], al
 endm
 
+; Move cursor
+; The screen in text mode have 25 rows and 80 columns
+moveCursor macro row, column
+    mov ah, 02h
+    mov dh, row
+    mov dl, column
+    int 10h
+endm
+
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+;\\\\\\\\\\\\\\\\     FILES     \\\\\\\\\\\\\\\\\\\\\\
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 ; GET ROUTE OF A FILE
 getRoute macro string
     local getCharacter, EndGC, Backspace
