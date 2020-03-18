@@ -51,6 +51,67 @@ getText macro string
         mov string[si], al
 endm
 
+; GET COMMAND THAT THE USER USE
+getCommand macro Nrow, Ncolumn
+    local getCharacter, EndGC, Backspace, Error
+    xor Nrow, Nrow
+    xor Ncolumn, Ncolumn
+    xor si, si
+
+    getCharacter:
+        getChar
+        ; -------A/a-------
+            cmp al, 41h     ; A
+                mov Ncolumn, 03h
+            cmp al, 61h     ; a
+                mov Ncolumn, 03h
+        ; -------B/b-------
+            cmp al, 42h     ; B
+                mov Ncolumn, 08h
+            cmp al, 62h     ; b
+                mov Ncolumn, 08h
+        ; -------C/c-------
+            cmp al, 43h     ; C
+                mov Ncolumn, 0dh
+            cmp al, 63h     ; c
+                mov Ncolumn, 0dh
+        ; -------D/d-------
+            cmp al, 44h     ; D
+                mov Ncolumn, 12h
+            cmp al, 64h     ; d
+                mov Ncolumn, 12h
+        ; -------E/e-------
+            cmp al, 45h     ; E
+                mov Ncolumn, 23h
+            cmp al, 65h     ; e
+                mov Ncolumn, 23h
+        ; -------F/f-------
+            cmp al, 46h     ; F
+                mov Ncolumn, 1ch
+            cmp al, 66h     ; f
+                mov Ncolumn, 1ch
+        ; -------G/g-------
+            cmp al, 47h     ; G
+                mov Ncolumn, 21h
+            cmp al, 67h     ; g
+                mov Ncolumn, 21h
+        ; -------H/h-------
+            cmp al, 48h     ; H
+                mov Ncolumn, 26h
+            cmp al, 68h     ; h
+                mov Ncolumn, 26h
+        ; -------I/i-------
+            cmp al, 49h     ; I
+                mov Ncolumn, 2bh
+            cmp al, 69h     ; i
+                mov Ncolumn, 2bh
+    Backspace:
+
+    Error:
+
+    EndGC:
+endm
+
 ; Move cursor
 ; The screen in text mode have 25 rows and 80 columns
 moveCursor macro row, column
