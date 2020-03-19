@@ -54,8 +54,8 @@ endm
 ; GET COMMAND THAT THE USER USE
 getCommand macro Nrow, Ncolumn
     local getCharacter, EndGC, Backspace, Error
-    xor Nrow, Nrow
-    xor Ncolumn, Ncolumn
+    mov Nrow, 00h
+    mov Ncolumn, 00h
     xor si, si
 
     getCharacter:
