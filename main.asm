@@ -11,7 +11,15 @@ include macros.asm
 
     ; SPECIAL CHARACTERS
 newLine db 13, 10, '$'
-cleanChar db '          ', '$'
+cleanChar db '           ', '$'
+errorCmd db 'Comando de juego invalido'. '$'
+    ; TESTING
+passMsg db 'PASS', '$'
+exitMsg db 'EXIT', '$'
+saveMsg db 'SAVE', '$'
+showMsg db 'SHOW', '$'
+rowMsg db 'ROW: ', '$'
+columnMsg db 'COLUMN: ', '$'
 
     ; HEADER AND MENU
 header db 9, 9, 'UNIVERSIDAD DE SAN CARLOS DE GUATEMALA', 13, 10, 9, 9, 'FACULTAD DE INGENIERIA', 13, 10, 9, 9, 'CIENCIAS Y SISTEMAS', 13, 10, 9, 9, 'ARQUITECTURA DE COMPUTADORES Y ENSAMBLADORES 1', 13, 10, 9, 9, 'NOMBRE: ANGEL MANUEL MIRANDA ASTURIAS', 13, 10, 9, 9, 'CARNET: 201807394', 13, 10, 9, 9, 'SECCION: A', 13, 10, '$'
@@ -27,17 +35,23 @@ htmlContent db 'GG'
     ; END HTML
 
     ; TURN (15 POSITIONS)
+
 actualTurn db 66 ; Black
+
 blacksTurn db 'Turno Negras: ', 13, 10, '$'
 blackCoin db 'FN', '$'
-whiteCoin db 'FB', '$'
+
 whitesTurn db 'Turno Blancas: ', 13, 10, '$'
+whiteCoin db 'FB', '$'
     ; END OF TURN
 
     ; POSITION (VARIABLES FOR THE POSITION WHERE WE ARE GOING TO PUT A COIN)
-row db 1 dup('$')
-column db 1 dup('$')
+row db 00h
+column db 00h
     ; END POSITION
+
+    ; COMMAND
+command db 5 dup('$')
 
     ; TABLE
 f9 db           '9    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
@@ -90,6 +104,7 @@ main proc
         ClearConsole
     DrawTable:
         ClearConsole
+        moveCursor 00h, 00h
         print blacksTurn
         print newLine
         print f9
@@ -110,24 +125,54 @@ main proc
         print f1_5
         print f1
         print f0
+        jmp Playing
     Playing:
         ; MOVING THE CURSOR TO THE INPUT POSITION
-        moveCursor 0fh, 00h
+        moveCursor 00h, 0fh
         
         ; CLEAN THE INPUT POSITION
         print cleanChar
 
         ; MOVING THE CURSOR TO THE INPUT POSITION
-        moveCursor 0fh, 00h
+        moveCursor 00h, 0fh
 
         ; GET THE COMMAND THAT THE PLAYER PUT AND MOVE THE CURSOR TO THE POSITION
-        getCommand row, column
-        moveCursor row, column
+        getText command
+        
+        ; ANALIZE THE COMMAND
+        getCommand command, row, column, state        
+
+        ; EXIT: ROW = 4fh COLUMN = 4fh
+        ; PASS: ROW = 54 COLUMN = 54
+        ; SAVE: ROW = 45 COLUMN = 45
+        ; SHOW: ROW = 53 COLUMN = 53
+        ; ERROR: ROW = 43 COLUMN = 43
+
+        ; EXIT. DONE
+        cmp row, 4fh
+            je EXITGAME
+        ; PASS. DONE 0.5 (CHECK IF BOTH PLAYERS PASS)
+        cmp row, 54h
+            je PASSTURN
+        ; SAVE GAME.
+        cmp row, 45h
+            je SAVEGAME
+        ; SHOW GAME.
+        cmp row, 53h
+            je SHOWGAME
+        ; INVALID COMMAND. DONE
+        cmp row, 43h
+            je INVALIDCOMMAND
+        print rowMsg           
+        print row
+        print columnMsg
+        print column
+        ;moveCursor row, column
 
         ; COMPARE WHO IS PLAYING
-        cmp actualTurn, 66
-            je PutBlackCoin
-        jmp PutWhiteCoin  
+        ;cmp actualTurn, 66
+        ;    je PutBlackCoin
+        ;jmp PutWhiteCoin  
     PutBlackCoin:
         ; PRINT IN THE POSITION THE COIN
         print blackCoin
@@ -144,10 +189,38 @@ main proc
         moveCursor 00h, 00h
         print blacksTurn
         jmp Playing
+    INVALIDCOMMAND:
+        moveCursor 01h, 00h
+        print errorCmd
+        getChar
+        Playing
+    SHOWGAME:
+        jmp Playing
+    SAVEGAME:
+        jmp Playing
+    PASSTURN:
+        cmp actualTurn, 66
+            je PassBlack
+        jmp PassWhite
+        PassWhite:
+            mov actualTurn, 66
+            moveCursor 00h, 00h
+            print blacksTurn
+            jmp Playing
+        PassBlack:
+            mov actualTurn, 87
+            moveCursor 00h, 00h
+            print whitesTurn
+            jmp Playing
+    EXITGAME:
+        ClearConsole
+        moveCursor 00h, 00h
+        jmp PrincipalMenu    
     Exit:
         mov ah, 4ch     ; END PROGRAM
         xor al, al
         int 21h
 
 main endp
-end main
+
+end
