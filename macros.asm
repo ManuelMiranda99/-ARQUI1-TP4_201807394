@@ -116,7 +116,7 @@ getCommand macro string, Nrow, Ncolumn, Pstate
                     inc si
                     jmp Case1
                 E:
-                    mov Ncolumn, 23h
+                    mov Ncolumn, 17h
                     inc si
                     jmp Case1
                 F:

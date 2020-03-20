@@ -12,7 +12,7 @@ include macros.asm
     ; SPECIAL CHARACTERS
 newLine db 13, 10, '$'
 cleanChar db '           ', '$'
-errorCmd db 'Comando de juego invalido'. '$'
+errorCmd db 'Comando de juego invalido', '$'
     ; TESTING
 passMsg db 'PASS', '$'
 exitMsg db 'EXIT', '$'
@@ -73,6 +73,18 @@ f1_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
 f1 db           '1    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
 f0 db 13, 10,   '   A    B    C    D    E    F    G    H    I', 13, 10, '$'
     ; END OF TABLE
+
+    ; MATRIX. 0 -> Empty. 1 -> White. 2 -> Black
+m9 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+m8 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+m7 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+m6 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+m5 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+m4 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+m3 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+m2 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+m1 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+    ; END OF MATRIX
 
 ; CODE SEGMENT
 ; ON THIS SEGMENT WE START TO WRITE THE CODE
@@ -163,16 +175,13 @@ main proc
         ; INVALID COMMAND. DONE
         cmp row, 43h
             je INVALIDCOMMAND
-        print rowMsg           
-        print row
-        print columnMsg
-        print column
-        ;moveCursor row, column
+        
+        moveCursor row, column
 
         ; COMPARE WHO IS PLAYING
-        ;cmp actualTurn, 66
-        ;    je PutBlackCoin
-        ;jmp PutWhiteCoin  
+        cmp actualTurn, 66
+            je PutBlackCoin
+        jmp PutWhiteCoin  
     PutBlackCoin:
         ; PRINT IN THE POSITION THE COIN
         print blackCoin
@@ -193,7 +202,11 @@ main proc
         moveCursor 01h, 00h
         print errorCmd
         getChar
-        Playing
+        moveCursor 01h, 00h
+        print cleanChar
+        print cleanChar
+        print cleanChar
+        jmp Playing
     SHOWGAME:
         jmp Playing
     SAVEGAME:
