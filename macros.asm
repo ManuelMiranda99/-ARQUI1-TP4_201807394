@@ -52,7 +52,7 @@ getText macro string
 endm
 
 ; GET COMMAND THAT THE USER USE
-getCommand macro string, Nrow, Ncolumn, Pstate
+getCommand macro string, Nrow, Ncolumn
     local Case0, Case1, Case2, Case3, Case4, Case5, Case6, Case7, Case8, Case9, Case10, Case11
     local A, B, C, D, E, F, G, H, I, Num1, Num2, Num3, Num4, Num5, Num6, Num7, Num8, Num9
     local ErrorL, EXITcmd, PASScmd, SAVEcmd, SHOWcmd, EndGC

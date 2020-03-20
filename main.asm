@@ -26,9 +26,6 @@ header db 9, 9, 'UNIVERSIDAD DE SAN CARLOS DE GUATEMALA', 13, 10, 9, 9, 'FACULTA
 menu db 13, 10, 9, 9, '-_-MENU-_-', 13, 10, 9, 9, '1) Iniciar Juego', 13, 10, 9, 9, '2) Cargar Juego', 13, 10, 9, 9, '3) Salir', 13, 10, '$'
     ; END HEADER AND MENU
 
-    ; POSITION OF THE NEW STONE OR SPECIAL COMMAND
-state db 00h
-
     ; HTML
 htmlFileName db 'estadoTablero.html'
 htmlContent db 'GG'
@@ -100,19 +97,20 @@ main proc
     PrincipalMenu:
         print header
         print menu
-        getChar
-        print newLine
+        getChar        
         ; COMPARE THE CHAR THAT THE USER WRITE IN THE PROGRAM
-        cmp al, '1'         ; START GAME            
+        cmp al, 31h         ; START GAME            
             je Game
-        cmp al, '2'         ; LOAD GAME
+        cmp al, 32h         ; LOAD GAME
             je LoadGame
-        cmp al, '3'         ; EXIT
+        cmp al, 33h         ; EXIT
             je Exit
     
     Game:
+        print newLine
         jmp DrawTable
     LoadGame:
+        print newLine
         ClearConsole
     DrawTable:
         ClearConsole
@@ -152,7 +150,7 @@ main proc
         getText command
         
         ; ANALIZE THE COMMAND
-        getCommand command, row, column, state        
+        getCommand command, row, column 
 
         ; EXIT: ROW = 4fh COLUMN = 4fh
         ; PASS: ROW = 54 COLUMN = 54
