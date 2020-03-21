@@ -9,88 +9,92 @@ include macros.asm
 ; ON THIS SEGMENT WE CREATE THE "VARIABLES" THAT WE ARE GOING TO USE IN THE PROGRAM
 .data
 
-    ; SPECIAL CHARACTERS
-newLine db 13, 10, '$'
-cleanChar db '           ', '$'
-errorCmd db 'Comando de juego invalido', '$'
-    ; TESTING
-passMsg db 'PASS', '$'
-exitMsg db 'EXIT', '$'
-saveMsg db 'SAVE', '$'
-showMsg db 'SHOW', '$'
-rowMsg db 'ROW: ', '$'
-columnMsg db 'COLUMN: ', '$'
+; SPECIAL CHARACTERS
+    newLine db 13, 10, '$'
+    cleanChar db '           ', '$'
+    errorCmd db 'Comando de juego invalido', '$'
+; END SPECIAL CHARACTER
 
-    ; HEADER AND MENU
-header db 9, 9, 'UNIVERSIDAD DE SAN CARLOS DE GUATEMALA', 13, 10, 9, 9, 'FACULTAD DE INGENIERIA', 13, 10, 9, 9, 'CIENCIAS Y SISTEMAS', 13, 10, 9, 9, 'ARQUITECTURA DE COMPUTADORES Y ENSAMBLADORES 1', 13, 10, 9, 9, 'NOMBRE: ANGEL MANUEL MIRANDA ASTURIAS', 13, 10, 9, 9, 'CARNET: 201807394', 13, 10, 9, 9, 'SECCION: A', 13, 10, '$'
-menu db 13, 10, 9, 9, '-_-MENU-_-', 13, 10, 9, 9, '1) Iniciar Juego', 13, 10, 9, 9, '2) Cargar Juego', 13, 10, 9, 9, '3) Salir', 13, 10, '$'
-msgRoute db 'Ingrese la ruta (.arq): ', '$'
-    ; END HEADER AND MENU
+; TESTING
+    
+; END TESTING
 
-    ; HTML
-htmlFileName db 'estadoTablero.html'
-htmlContent db 'GG'
-    ; END HTML
+; HEADER AND MENU
+    header db 9, 9, 'UNIVERSIDAD DE SAN CARLOS DE GUATEMALA', 13, 10, 9, 9, 'FACULTAD DE INGENIERIA', 13, 10, 9, 9, 'CIENCIAS Y SISTEMAS', 13, 10, 9, 9, 'ARQUITECTURA DE COMPUTADORES Y ENSAMBLADORES 1', 13, 10, 9, 9, 'NOMBRE: ANGEL MANUEL MIRANDA ASTURIAS', 13, 10, 9, 9, 'CARNET: 201807394', 13, 10, 9, 9, 'SECCION: A', 13, 10, '$'
+    menu db 13, 10, 9, 9, '-_-MENU-_-', 13, 10, 9, 9, '1) Iniciar Juego', 13, 10, 9, 9, '2) Cargar Juego', 13, 10, 9, 9, '3) Salir', 13, 10, '$'
+    msgRoute db 'Ingrese la ruta (.arq): ', '$'
+; END HEADER AND MENU
 
-    ; TURN (15 POSITIONS)
+; HTML
+    htmlFileName db 'p4/estadoTablero.html'
+    htmlContent db 'GG'
+; END HTML
 
-actualTurn db 66 ; Black
+; TURN (15 POSITIONS)
 
-blacksTurn db 'Turno Negras: ', 13, 10, '$'
-blackCoin db 'FN', '$'
+    actualTurn db 66 ; Black
 
-whitesTurn db 'Turno Blancas: ', 13, 10, '$'
-whiteCoin db 'FB', '$'
-    ; END OF TURN
+    blacksTurn db 'Turno Negras: ', 13, 10, '$'
+    blackCoin db 'FN', '$'
 
-    ; POSITION (VARIABLES FOR THE POSITION WHERE WE ARE GOING TO PUT A COIN)
-row db 00h
-column db 00h
-    ; END POSITION
+    whitesTurn db 'Turno Blancas: ', 13, 10, '$'
+    whiteCoin db 'FB', '$'
+; END OF TURN
 
-    ; COMMAND
-command db 5 dup('$')
+; POSITION (VARIABLES FOR THE POSITION WHERE WE ARE GOING TO PUT A COIN)
+    row db 00h
+    column db 00h
+; END POSITION
 
-    ; ROUTES
-route db 50 dup('$')
-Entryhandler dw ?
-    ; END ROUTES
+; COMMAND
+    command db 5 dup('$')
 
-    ; TABLE
-f9 db           '9    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
-f8_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
-f8 db           '8    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
-f7_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
-f7 db           '7    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
-f6_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
-f6 db           '6    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
-f5_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
-f5 db           '5    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
-f4_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
-f4 db           '4    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
-f3_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
-f3 db           '3    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
-f2_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
-f2 db           '2    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
-f1_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
-f1 db           '1    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
-f0 db 13, 10,   '   A    B    C    D    E    F    G    H    I', 13, 10, '$'
-    ; END OF TABLE
+; ROUTES
+    route db 50 dup('$')
+    Entryhandler dw ?
+; END ROUTES
 
-    ; MATRIX. 20h -> Empty. 57h -> White. 42h -> Black
-m9 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
-m8 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
-m7 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
-m6 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
-m5 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
-m4 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
-m3 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
-m2 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
-m1 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+; ERRORS
+    msgErrorWrite db 'Error al escribir en el archivo', '$'
+    msgErrorOpen db 'Error al abrir el archivo', '$'
+    msgErrorCreate db 'Error al crear el archivo', '$'
+    msgErrorClose db 'Error al cerrar el archivo', '$'
+    msgErrorRead db 'Error al leer el archivo', '$'
+; END ERRORS
 
-fileContent db 82 dup('$')
+; TABLE
+    f9 db           '9    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
+    f8_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
+    f8 db           '8    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
+    f7_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
+    f7 db           '7    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
+    f6_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
+    f6 db           '6    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
+    f5_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
+    f5 db           '5    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
+    f4_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
+    f4 db           '4    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
+    f3_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
+    f3 db           '3    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
+    f2_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
+    f2 db           '2    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
+    f1_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
+    f1 db           '1    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
+    f0 db 13, 10,   '   A    B    C    D    E    F    G    H    I', 13, 10, '$'
+; END OF TABLE
 
-    ; END OF MATRIX
+; MATRIX. 56h -> Empty. 57h -> White. 42h -> Black
+    fileContent9 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+    fileContent8 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+    fileContent7 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+    fileContent6 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+    fileContent5 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+    fileContent4 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+    fileContent3 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+    fileContent2 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+    fileContent1 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+
+; END OF MATRIX
 
 ; CODE SEGMENT
 ; ON THIS SEGMENT WE START TO WRITE THE CODE
@@ -192,8 +196,9 @@ main proc
     PutBlackCoin:
         ; PRINT IN THE POSITION THE COIN
         print blackCoin
-        
 
+        PutCoinMacro 42h
+        
         returnPutBlackCoin:
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 87
@@ -204,6 +209,7 @@ main proc
         ; PRINT IN THE POSITION THE COIN
         print whiteCoin
         
+        PutCoinMacro 57h
 
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 66
@@ -223,24 +229,19 @@ main proc
     SHOWGAME:
         jmp Playing
     SAVEGAME:
-
-        ; Se crea archivo pero no se genera bien en el texto
-
+                
         print msgRoute
-
-        Clean route, SIZEOF route, 24h
 
         getRoute route
 
-        CreateFile route, Entryhandler
-
-        ; CHECK THE GENERATION OF TEXT AND THE WRITE ON FILE MACRO
-
-        ;GetFileText fileContent
-
-        ;getChar
+        CreateFile route, Entryhandler                
 
         ;WriteOnFile Entryhandler, fileContent, SIZEOF fileContent
+
+        ;CloseFile Entryhandler
+
+        ;print fileContent
+        ;getChar
 
         moveCursor 01h, 00h
         print cleanChar
@@ -271,7 +272,51 @@ main proc
         mov ah, 4ch     ; END PROGRAM
         xor al, al
         int 21h
-
+    WriteError:
+        moveCursor 00h, 00h
+        print msgErrorWrite
+        getChar
+        moveCursor 00h, 00h
+        print cleanChar
+        print cleanChar
+        print cleanChar        
+        jmp Playing
+    OpenError:
+        moveCursor 00h, 00h
+        print msgErrorOpen
+        getChar
+        moveCursor 50h, 00h
+        print cleanChar
+        print cleanChar
+        print cleanChar        
+        jmp PrincipalMenu
+    CreateError:
+        moveCursor 00h, 00h
+        print msgErrorCreate
+        getChar
+        moveCursor 50h, 00h
+        print cleanChar
+        print cleanChar
+        print cleanChar        
+        jmp Playing
+    CloseError:
+        moveCursor 00h, 00h
+        print msgErrorClose
+        getChar
+        moveCursor 50h, 00h
+        print cleanChar
+        print cleanChar
+        print cleanChar        
+        jmp Playing
+    ReadError:
+        moveCursor 50h, 00h
+        print msgErrorRead
+        getChar
+        moveCursor 50h, 00h
+        print cleanChar
+        print cleanChar
+        print cleanChar        
+        jmp PrincipalMenu
 main endp
 
 end

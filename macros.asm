@@ -2,15 +2,17 @@
 
 ; PRINT ON THE SCREEN
 print macro string
+    Pushear
     mov ax, @data
     mov ds, ax
     mov ah, 09h             ; PRINT
     mov dx, offset string
     int 21h
+    Popear
 endm
 
 ; GET CHARACTER
-getChar macro
+getChar macro    
     mov ah, 01h
     int 21h
 endm
@@ -18,6 +20,7 @@ endm
 ; CLEAN STRING
 Clean macro string, numBytes, char
     local RepeatLoop
+    Pushear
     xor si, si
     xor cx, cx
     mov cx, numBytes
@@ -25,11 +28,13 @@ Clean macro string, numBytes, char
         mov string[si], char
         inc si
     Loop RepeatLoop
+    Popear
 endm
 
 ; GET TEXT UNTIL THE USER WRITE ENTER
 getText macro string
     local getCharacter, EndGC, Backspace
+    Pushear
     xor si, si
 
     getCharacter:
@@ -46,9 +51,10 @@ getText macro string
         dec si
         mov string[si], al
         jmp getCharacter
-    EndGC:
+    EndGC:        
         mov al, 24h
         mov string[si], al
+        Popear
 endm
 
 ; GET COMMAND THAT THE USER USE
@@ -318,22 +324,144 @@ getCommand macro string, Nrow, Ncolumn
         Popear
 endm
 
+; PUT COIN IN A PLACE
+PutCoinMacro macro char
+    local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
+    local Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9
+    local CompareColumns, CompareRows
+    local EndGC
+    Pushear
+    ; COLUMNs
+        CompareColumns:
+            cmp column, 03h
+                je Column1
+            cmp column, 08h
+                je Column2
+            cmp column, 0dh
+                je Column3
+            cmp column, 12h
+                je Column4
+            cmp column, 17h
+                je Column5
+            cmp column, 1ch
+                je Column6
+            cmp column, 21h
+                je Column7
+            cmp column, 26h
+                je Column8
+            cmp column, 2bh
+                je Column9
+    ; ASSIGN VALUES FOR COLUMNS
+        Column1:
+            mov si, 00h
+            jmp CompareRows
+        Column2:
+            mov si, 01h
+            jmp CompareRows
+        Column3:
+            mov si, 02h
+            jmp CompareRows
+        Column4:
+            mov si, 03h
+            jmp CompareRows
+        Column5:
+            mov si, 04h
+            jmp CompareRows
+        Column6:
+            mov si, 05h
+            jmp CompareRows
+        Column7:
+            mov si, 06h
+            jmp CompareRows
+        Column8:
+            mov si, 07h
+            jmp CompareRows
+        Column9:
+            mov si, 08h
+            jmp CompareRows
+    ; ROWs
+    CompareRows:
+        getChar
+        ; ----1----
+        cmp row, 12h
+            je Row1
+        ; ----2----        
+        cmp row, 10h
+            je Row2
+        ; ----3----
+        cmp row, 0eh
+            je Row3
+        ; ----4----
+        cmp row, 0ch
+            je Row4
+        ; ----5----
+        cmp row, 0ah
+            je Row5
+        ; ----6----
+        cmp row, 08h
+            je Row6
+        ; ----7----
+        cmp row, 06h
+            je Row7
+        ; ----8----
+        cmp row, 04h
+            je Row8
+        ; ----9----
+        cmp row, 02h
+            je Row9
+    ; ASSIGN VALUES FOR ROWs
+        Row1:
+            mov fileContent1[si], char
+            jmp EndGC
+        Row2:
+            mov fileContent2[si], char
+            jmp EndGC
+        Row3:
+            mov fileContent3[si], char
+            jmp EndGC
+        Row4:
+            mov fileContent4[si], char
+            jmp EndGC
+        Row5:
+            mov fileContent5[si], char
+            jmp EndGC
+        Row6:
+            mov fileContent6[si], char
+            jmp EndGC
+        Row7:
+            mov fileContent7[si], char
+            jmp EndGC
+        Row8:
+            mov fileContent8[si], char
+            jmp EndGC
+        Row9:
+            mov fileContent9[si], char
+            jmp EndGC
+    
+    EndGC:
+        Popear        
+endm
+
 ; Move cursor
 ; The screen in text mode have 25 rows and 80 columns
 moveCursor macro row, column
+    Pushear
     mov ah, 02h
     mov dh, row
     mov dl, column
     int 10h
+    Popear
 endm
 
 ; CLEAN CONSOLE
 ClearConsole macro
     local ClearConsoleRepeat
+    Pushear
     mov dx, 50h
     ClearConsoleRepeat:
         print newLine
     Loop ClearConsoleRepeat
+    Popear
 endm
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -362,30 +490,32 @@ getRoute macro string
         dec si
         mov string[si], al
         jmp getCharacter
-    EndGC:
-        Popear
+    EndGC:        
         mov al, 00h
         mov string[si], al
+        Popear
 endm
 
 ; OPEN FILE
 Open macro route, handler
+    Pushear
     mov ah, 3dh
     mov al, 00h
     lea dx, route
     int 21h
     ; JUMP IF AN ERROR OCCURRED WHILE OPENING THE FILE
-    ; jc Error de abrir archivo
+    jc OpenError
     mov handler, ax
+    Popear
 endm
 
 ; CLOSE FILE
-Close macro handler
+CloseFile macro handler
     mov ah, 3eh
     mov bx, handler
     int 21h
     ; JUMP IF THE FILE DOESNT CLOSE FINE
-    ; jc No cerro bien
+    jc CloseError
 endm
 
 ; CREATE FILE
@@ -394,113 +524,30 @@ CreateFile macro string, handler
     mov cx, 00h
     lea dx, string
     int 21h
-    ; JUMP IF AN ERROR OCCURS CREATING THE FILE
-    ; jc Error de crear
+    ; JUMP IF AN ERROR OCCURS WHILE CREATING THE FILE
+    jc CreateError
     mov handler, ax
-endm
-
-; GET FILE TEXT
-GetFileText macro infoFile
-    local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
-    local EndGC
-    Pushear
-    mov si, 00h    
-    mov di, 00h
-    mov dx, 08h
-    Row9:
-        mov al, m9[di]
-        mov infoFile[si], al
-        inc si
-        inc di
-        Loop Row9
-        mov di, 00h
-        mov dx, 08h
-        jmp Row8
-    Row8:
-        mov al, m8[di]
-        mov infoFile[si], al
-        inc si
-        inc di
-        Loop Row8
-        mov di, 00h
-        mov dx, 08h
-        jmp Row7
-    Row7:
-        mov al, m7[di]
-        mov infoFile[si], al
-        inc si
-        inc di
-        Loop Row7
-        mov di, 00h
-        mov dx, 08h
-        jmp Row6
-    Row6:
-        mov al, m6[di]
-        mov infoFile[si], al
-        inc si
-        inc di
-        Loop Row6
-        mov di, 00h
-        mov dx, 08h
-        jmp Row5
-    Row5:
-        mov al, m5[di]
-        mov infoFile[si], al
-        inc si
-        inc di
-        Loop Row5
-        mov di, 00h
-        mov dx, 08h
-        jmp Row4
-    Row4:
-        mov al, m4[di]
-        mov infoFile[si], al
-        inc si
-        inc di
-        Loop Row4
-        mov di, 00h
-        mov dx, 08h
-        jmp Row3
-    Row3:
-        mov al, m3[di]
-        mov infoFile[si], al
-        inc si
-        inc di
-        Loop Row3
-        mov di, 00h
-        mov dx, 08h
-        jmp Row2
-    Row2:
-        mov al, m2[di]
-        mov infoFile[si], al
-        inc si
-        inc di
-        Loop Row2
-        mov di, 00h
-        mov dx, 08h
-        jmp Row1
-    Row1:
-        mov al, m1[di]
-        mov infoFile[si], al
-        inc si
-        inc di
-        Loop Row1
-        jmp EndGC
-    EndGC:
-        Popear
 endm
 
 ; WRITE ON FILE
 WriteOnFile macro handler, info, numBytes
-    Pushear
     mov ah, 40h
     mov bx, handler
     mov cx, numBytes
     lea dx, info
     int 21h
     ; JUMP IF AN ERROR OCCURS DURING WRITING IN THE FILE
-    ; jc Error de escribir
-    Popear
+    jc WriteError
+endm
+
+; READ FILE
+ReadFile macro handler, info, numBytes    
+    mov ah, 3fh
+    mov bx, handler
+    mov cx, numBytes
+    lea dx, info
+    int 21h    
+    jc ReadError
 endm
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
