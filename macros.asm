@@ -381,7 +381,6 @@ PutCoinMacro macro char
             jmp CompareRows
     ; ROWs
     CompareRows:
-        getChar
         ; ----1----
         cmp row, 12h
             je Row1
@@ -462,6 +461,152 @@ ClearConsole macro
         print newLine
     Loop ClearConsoleRepeat
     Popear
+endm
+
+ConcatenateRows macro string
+    local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
+    local RepeatRow1, RepeatRow2, RepeatRow3, RepeatRow4, RepeatRow5, RepeatRow6, RepeatRow7, RepeatRow8, RepeatRow9
+    local EndGC
+    Pushear
+    xor si, si    
+    xor cx, cx    
+    Row9:     
+        xor di, di   
+        mov cx, 0bh
+        RepeatRow9:
+            moveCursor 01h, 00h
+            print repeatMsg9
+            getChar
+            mov al, fileContent9[di]
+            mov string[si], al
+            ;moveCursor 01h, 00h
+            ;print cleanChar
+            ;print string[si]
+            inc si
+            inc di
+        Loop RepeatRow9
+    Row8:
+        xor di, di
+        mov cx, 0bh
+        RepeatRow8:
+            moveCursor 01h, 00h
+            print repeatMsg8
+            getChar            
+            mov al, fileContent8[di]
+            mov string[si], al
+            ;moveCursor 01h, 00h
+            ;print cleanChar
+            ;print string[si]
+            inc si
+            inc di
+        Loop RepeatRow8
+    Row7:
+        xor di, di
+        mov cx, 0bh
+        RepeatRow7:
+            moveCursor 01h, 00h
+            print repeatMsg7
+            getChar            
+            mov al, fileContent7[di]
+            mov string[si], al
+            ;moveCursor 01h, 00h
+            ;print cleanChar
+            ;print string[si]
+            inc si
+            inc di
+        Loop RepeatRow7
+    Row6:
+        xor di, di
+        mov cx, 0bh
+        RepeatRow6:
+            moveCursor 01h, 00h
+            print repeatMsg6
+            getChar            
+            mov al, fileContent6[di]
+            mov string[si], al
+            ;moveCursor 01h, 00h
+            ;print cleanChar
+            ;print string[si]
+            inc si
+            inc di
+        Loop RepeatRow6
+    Row5:
+        xor di, di
+        mov cx, 0bh
+        RepeatRow5:
+            moveCursor 01h, 00h
+            print repeatMsg5
+            getChar            
+            mov al, fileContent5[di]
+            mov string[si], al
+            ;moveCursor 01h, 00h
+            ;print cleanChar
+            ;print string[si]
+            inc si
+            inc di
+        Loop RepeatRow5
+    Row4:
+        xor di, di
+        mov cx, 0bh
+        RepeatRow4:
+            moveCursor 01h, 00h
+            print repeatMsg4
+            getChar           
+            mov al, fileContent4[di] 
+            mov string[si], al
+            ;moveCursor 01h, 00h
+            ;print cleanChar
+            ;print string[si]
+            inc si
+            inc di
+        Loop RepeatRow4
+    Row3:
+        xor di, di
+        mov cx, 0bh
+        RepeatRow3:
+            moveCursor 01h, 00h
+            print repeatMsg3
+            getChar            
+            mov al, fileContent3[di]
+            mov string[si], al
+            ;moveCursor 01h, 00h
+            ;print cleanChar
+            ;print string[si]
+            inc si
+            inc di
+        Loop RepeatRow3
+    Row2:
+        xor di, di
+        mov cx, 0bh
+        RepeatRow2:
+            moveCursor 01h, 00h
+            print repeatMsg2
+            getChar            
+            mov al, fileContent2[di]
+            mov string[si], al
+            ;moveCursor 01h, 00h
+            ;print cleanChar
+            ;print string[si]
+            inc si
+            inc di
+        Loop RepeatRow2
+    Row1:
+        xor di, di
+        mov cx, 0bh
+        RepeatRow1:
+            moveCursor 01h, 00h
+            print repeatMsg1
+            getChar            
+            mov al, fileContent1[di]
+            mov string[si], al
+            ;moveCursor 01h, 00h
+            ;print cleanChar
+            ;print string[si]
+            inc si
+            inc di
+        Loop RepeatRow1
+    EndGC:
+        Popear
 endm
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

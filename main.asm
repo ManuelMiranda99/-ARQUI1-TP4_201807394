@@ -11,12 +11,20 @@ include macros.asm
 
 ; SPECIAL CHARACTERS
     newLine db 13, 10, '$'
-    cleanChar db '           ', '$'
+    cleanChar db '             ', '$'
     errorCmd db 'Comando de juego invalido', '$'
 ; END SPECIAL CHARACTER
 
 ; TESTING
-    
+    repeatMsg9 db 'Repitiendo 9', '$'
+    repeatMsg8 db 'Repitiendo 8', '$'
+    repeatMsg7 db 'Repitiendo 7', '$'
+    repeatMsg6 db 'Repitiendo 6', '$'
+    repeatMsg5 db 'Repitiendo 5', '$'
+    repeatMsg4 db 'Repitiendo 4', '$'
+    repeatMsg3 db 'Repitiendo 3', '$'
+    repeatMsg2 db 'Repitiendo 2', '$'
+    repeatMsg1 db 'Repitiendo 1', '$'
 ; END TESTING
 
 ; HEADER AND MENU
@@ -84,15 +92,17 @@ include macros.asm
 ; END OF TABLE
 
 ; MATRIX. 56h -> Empty. 57h -> White. 42h -> Black
-    fileContent9 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
-    fileContent8 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
-    fileContent7 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
-    fileContent6 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
-    fileContent5 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
-    fileContent4 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
-    fileContent3 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
-    fileContent2 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
-    fileContent1 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah, '$'
+    fileContent9 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
+    fileContent8 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
+    fileContent7 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
+    fileContent6 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
+    fileContent5 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
+    fileContent4 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
+    fileContent3 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
+    fileContent2 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
+    fileContent1 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
+
+    fileContent db 99 dup('$')
 
 ; END OF MATRIX
 
@@ -234,14 +244,13 @@ main proc
 
         getRoute route
 
-        CreateFile route, Entryhandler                
+        CreateFile route, Entryhandler          
 
-        ;WriteOnFile Entryhandler, fileContent, SIZEOF fileContent
+        ConcatenateRows fileContent
 
-        ;CloseFile Entryhandler
+        WriteOnFile Entryhandler, fileContent, SIZEOF fileContent
 
-        ;print fileContent
-        ;getChar
+        CloseFile Entryhandler
 
         moveCursor 01h, 00h
         print cleanChar
