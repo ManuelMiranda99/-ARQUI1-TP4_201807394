@@ -610,29 +610,397 @@ ConcatenateRows macro string
         Popear
 endm
 
-AnalizeText macro string, numBytes
+AnalizeText macro string, Prow, Pcolumn
     local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
+    local RepeatRow1, RepeatRow2, RepeatRow3, RepeatRow4, RepeatRow5, RepeatRow6, RepeatRow7, RepeatRow8, RepeatRow9
     local EndGC
-    Pushear
+    Pushear    
+    ; For the file 
+    xor si, si    
     
-    Row1:
-
-    Row2:
-
-    Row3:
-
-    Row4:
-
-    Row5:
-
-    Row6:
-
-    Row7:
-
-    Row8:
-
+    xor cx, cx
+    ; Initializing the values of the row and column (Position in the table) to Move the cursor and print somethin
+    mov Prow, 02h
+    mov Pcolumn, 03h
     Row9:
-    
+        ; Repeat 11 times the reading of the file
+        mov cx, 0bh
+        ; For the content of the file that we generate
+        xor di, di
+        RepeatRow9:
+            
+                mov al, string[si]
+
+                cmp al, '42h'
+                    je PrintBlackCoinRow9
+                
+                cmp al, '57h'
+                    je PrintWhiteCoinRow9
+                ReturnRepeat9:
+                    add Pcolumn, 05h
+                    inc di
+                    inc si
+        Loop RepeatRow9        
+            
+        add Prow, 02h
+        mov Pcolumn, 03h
+        jmp Row8
+
+        PrintBlackCoinRow9:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print blackCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent9[di], '42h'
+
+            jmp ReturnRepeat9
+        PrintWhiteCoinRow9:
+                ; Put the coin in the console
+                moveCursor Prow, Pcolumn            
+                print whiteCoin
+
+                ; Put the coin in the content that we save
+                mov fileContent9[di], '57h'
+                jmp ReturnRepeat9
+    Row8:
+        ; Repeat 11 times the reading of the file
+        mov cx, 0bh
+        ; For the content of the file that we generate
+        xor di, di
+
+        RepeatRow8:            
+                
+                mov al, string[si]
+
+                cmp al, '42h'
+                    je PrintBlackCoinRow8
+                
+                cmp al, '57h'
+                    je PrintWhiteCoinRow8                
+                ReturnRepeat8:
+                    add Pcolumn, 05h
+                    inc di
+                    inc si
+        Loop RepeatRow8
+        
+        add Prow, 02h
+        mov Pcolumn, 03h
+        jmp Row7
+
+        PrintBlackCoinRow8:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print blackCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent8[di], '42h'
+
+            jmp ReturnRepeat8
+        PrintWhiteCoinRow8:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print whiteCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent8[di], '57h'
+            jmp ReturnRepeat8
+    Row7:
+        ; Repeat 11 times the reading of the file
+        mov cx, 0bh
+        ; For the content of the file that we generate
+        xor di, di
+
+        RepeatRow7:
+            
+            mov al, string[si]
+
+            cmp al, '42h'
+                je PrintBlackCoinRow7
+            
+            cmp al, '57h'
+                je PrintWhiteCoinRow7
+            ReturnRepeat7:
+                add Pcolumn, 05h
+                inc di
+                inc si
+        Loop RepeatRow7
+        
+        add Prow, 02h
+        mov Pcolumn, 03h
+        jmp Row6
+
+        PrintBlackCoinRow7:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print blackCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent7[di], '42h'
+
+            jmp ReturnRepeat7
+        PrintWhiteCoinRow7:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print whiteCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent7[di], '57h'
+            jmp ReturnRepeat7
+    Row6:
+        ; Repeat 11 times the reading of the file
+        mov cx, 0bh
+        ; For the content of the file that we generate
+        xor di, di
+
+        RepeatRow6:            
+            
+            mov al, string[si]
+
+            cmp al, '42h'
+                je PrintBlackCoinRow6
+            
+            cmp al, '57h'
+                je PrintWhiteCoinRow6
+            ReturnRepeat6:
+                add Pcolumn, 05h
+                inc di
+                inc si
+        Loop RepeatRow6
+        
+        add Prow, 02h
+        mov Pcolumn, 03h
+        jmp Row5
+
+        PrintBlackCoinRow6:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print blackCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent6[di], '42h'
+
+            jmp ReturnRepeat6
+        PrintWhiteCoinRow6:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print whiteCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent6[di], '57h'
+            jmp ReturnRepeat6
+    Row5:
+        ; Repeat 11 times the reading of the file
+        mov cx, 0bh
+        ; For the content of the file that we generate
+        xor di, di
+
+        RepeatRow5:
+
+            
+                mov al, string[si]
+
+                cmp al, '42h'
+                    je PrintBlackCoinRow5
+                
+                cmp al, '57h'
+                    je PrintWhiteCoinRow5
+                ReturnRepeat5:
+                    add Pcolumn, 05h
+                    inc di
+                    inc si
+            Loop RepeatRow5
+        
+        add Prow, 02h
+        mov Pcolumn, 03h
+        jmp Row4
+
+        PrintBlackCoinRow5:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print blackCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent5[di], '42h'
+
+            jmp ReturnRepeat5
+        PrintWhiteCoinRow5:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print whiteCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent5[di], '57h'
+            jmp ReturnRepeat5
+    Row4:
+        ; Repeat 11 times the reading of the file
+        mov cx, 0bh
+        ; For the content of the file that we generate
+        xor di, di
+
+        RepeatRow4:
+            
+                mov al, string[si]
+
+                cmp al, '42h'
+                    je PrintBlackCoinRow4
+                
+                cmp al, '57h'
+                    je PrintWhiteCoinRow4
+                ReturnRepeat4:
+                    add Pcolumn, 05h
+                    inc di
+                    inc si
+        Loop RepeatRow4
+        
+        add Prow, 02h
+        mov Pcolumn, 03h
+        jmp Row3
+
+        PrintBlackCoinRow4:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print blackCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent4[di], '42h'
+
+            jmp ReturnRepeat4
+        PrintWhiteCoinRow4:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print whiteCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent4[di], '57h'
+            jmp ReturnRepeat4
+    Row3:
+        ; Repeat 11 times the reading of the file
+        mov cx, 0bh
+        ; For the content of the file that we generate
+        xor di, di
+
+        RepeatRow3:
+
+            
+                mov al, string[si]
+
+                cmp al, '42h'
+                    je PrintBlackCoinRow3
+                
+                cmp al, '57h'
+                    je PrintWhiteCoinRow3
+                ReturnRepeat3:
+                    add Pcolumn, 05h
+                    inc di
+                    inc si
+        Loop RepeatRow3
+
+        add Prow, 02h
+        mov Pcolumn, 03h
+        jmp Row2
+
+        PrintBlackCoinRow3:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print blackCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent3[di], '42h'
+
+            jmp ReturnRepeat9
+        PrintWhiteCoinRow3:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print whiteCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent3[di], '57h'
+            jmp ReturnRepeat3
+    Row2:
+        ; Repeat 11 times the reading of the file
+        mov cx, 0bh
+        ; For the content of the file that we generate
+        xor di, di
+
+        RepeatRow2:
+
+            
+                mov al, string[si]
+
+                cmp al, '42h'
+                    je PrintBlackCoinRow2
+                
+                cmp al, '57h'
+                    je PrintWhiteCoinRow2
+                ReturnRepeat2:
+                    add Pcolumn, 05h
+                    inc di
+                    inc si
+        Loop RepeatRow2
+        
+        add Prow, 02h
+        mov Pcolumn, 03h
+        jmp Row1
+
+        PrintBlackCoinRow2:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print blackCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent2[di], '42h'
+
+            jmp ReturnRepeat2
+        PrintWhiteCoinRow2:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print whiteCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent2[di], '57h'
+            jmp ReturnRepeat2
+    Row1:
+        ; Repeat 11 times the reading of the file
+        mov cx, 0bh
+        ; For the content of the file that we generate
+        xor di, di
+
+        RepeatRow1:
+
+            
+                mov al, string[si]
+
+                cmp al, '42h'
+                    je PrintBlackCoinRow1
+                
+                cmp al, '57h'
+                    je PrintWhiteCoinRow1
+                ReturnRepeat1:
+                    add Pcolumn, 05h
+                    inc di
+                    inc si
+            Loop RepeatRow1
+        
+        jmp EndGC
+
+        PrintBlackCoinRow1:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print blackCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent1[di], '42h'
+
+            jmp ReturnRepeat1
+        PrintWhiteCoinRow1:
+            ; Put the coin in the console
+            moveCursor Prow, Pcolumn            
+            print whiteCoin
+
+            ; Put the coin in the content that we save
+            mov fileContent1[di], '57h'
+            jmp ReturnRepeat1    
     EndGC:
         Popear
 endm
@@ -640,6 +1008,12 @@ endm
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\     FILES     \\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+; RESET FILE CONTENT
+resetFileContent macro
+
+endm
+
 
 ; GET ROUTE OF A FILE
 getRoute macro string

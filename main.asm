@@ -55,6 +55,10 @@ include macros.asm
 ; POSITION (VARIABLES FOR THE POSITION WHERE WE ARE GOING TO PUT A COIN)
     row db 00h
     column db 00h
+
+    rowFile db 00h
+    columnFile db 00h
+
 ; END POSITION
 
 ; COMMAND
@@ -154,8 +158,9 @@ main proc
 
         DrawTable
 
-        AnalizeText fileContent, SIZEOF fileContent
+        AnalizeText fileContent, rowFile, columnFile
         
+        jmp Playing
     Playing:        
         ; MOVING THE CURSOR TO THE INPUT POSITION
         moveCursor 00h, 0fh
