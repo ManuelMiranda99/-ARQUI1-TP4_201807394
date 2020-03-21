@@ -343,6 +343,7 @@ endm
 ; GET ROUTE OF A FILE
 getRoute macro string
     local getCharacter, EndGC, Backspace
+    Pushear
     xor si, si
     getCharacter:
         getChar
@@ -361,7 +362,8 @@ getRoute macro string
         dec si
         mov string[si], al
         jmp getCharacter
-    EndGC
+    EndGC:
+        Popear
         mov al, 00h
         mov string[si], al
 endm
@@ -387,7 +389,7 @@ Close macro handler
 endm
 
 ; CREATE FILE
-Create macro string, handler
+CreateFile macro string, handler
     mov ah, 3ch
     mov cx, 00h
     lea dx, string
@@ -397,8 +399,100 @@ Create macro string, handler
     mov handler, ax
 endm
 
+; GET FILE TEXT
+GetFileText macro infoFile
+    local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
+    local EndGC
+    Pushear
+    mov si, 00h    
+    mov di, 00h
+    mov dx, 08h
+    Row9:
+        mov al, m9[di]
+        mov infoFile[si], al
+        inc si
+        inc di
+        Loop Row9
+        mov di, 00h
+        mov dx, 08h
+        jmp Row8
+    Row8:
+        mov al, m8[di]
+        mov infoFile[si], al
+        inc si
+        inc di
+        Loop Row8
+        mov di, 00h
+        mov dx, 08h
+        jmp Row7
+    Row7:
+        mov al, m7[di]
+        mov infoFile[si], al
+        inc si
+        inc di
+        Loop Row7
+        mov di, 00h
+        mov dx, 08h
+        jmp Row6
+    Row6:
+        mov al, m6[di]
+        mov infoFile[si], al
+        inc si
+        inc di
+        Loop Row6
+        mov di, 00h
+        mov dx, 08h
+        jmp Row5
+    Row5:
+        mov al, m5[di]
+        mov infoFile[si], al
+        inc si
+        inc di
+        Loop Row5
+        mov di, 00h
+        mov dx, 08h
+        jmp Row4
+    Row4:
+        mov al, m4[di]
+        mov infoFile[si], al
+        inc si
+        inc di
+        Loop Row4
+        mov di, 00h
+        mov dx, 08h
+        jmp Row3
+    Row3:
+        mov al, m3[di]
+        mov infoFile[si], al
+        inc si
+        inc di
+        Loop Row3
+        mov di, 00h
+        mov dx, 08h
+        jmp Row2
+    Row2:
+        mov al, m2[di]
+        mov infoFile[si], al
+        inc si
+        inc di
+        Loop Row2
+        mov di, 00h
+        mov dx, 08h
+        jmp Row1
+    Row1:
+        mov al, m1[di]
+        mov infoFile[si], al
+        inc si
+        inc di
+        Loop Row1
+        jmp EndGC
+    EndGC:
+        Popear
+endm
+
 ; WRITE ON FILE
 WriteOnFile macro handler, info, numBytes
+    Pushear
     mov ah, 40h
     mov bx, handler
     mov cx, numBytes
@@ -406,6 +500,7 @@ WriteOnFile macro handler, info, numBytes
     int 21h
     ; JUMP IF AN ERROR OCCURS DURING WRITING IN THE FILE
     ; jc Error de escribir
+    Popear
 endm
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

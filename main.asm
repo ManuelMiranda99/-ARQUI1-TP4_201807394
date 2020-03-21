@@ -24,6 +24,7 @@ columnMsg db 'COLUMN: ', '$'
     ; HEADER AND MENU
 header db 9, 9, 'UNIVERSIDAD DE SAN CARLOS DE GUATEMALA', 13, 10, 9, 9, 'FACULTAD DE INGENIERIA', 13, 10, 9, 9, 'CIENCIAS Y SISTEMAS', 13, 10, 9, 9, 'ARQUITECTURA DE COMPUTADORES Y ENSAMBLADORES 1', 13, 10, 9, 9, 'NOMBRE: ANGEL MANUEL MIRANDA ASTURIAS', 13, 10, 9, 9, 'CARNET: 201807394', 13, 10, 9, 9, 'SECCION: A', 13, 10, '$'
 menu db 13, 10, 9, 9, '-_-MENU-_-', 13, 10, 9, 9, '1) Iniciar Juego', 13, 10, 9, 9, '2) Cargar Juego', 13, 10, 9, 9, '3) Salir', 13, 10, '$'
+msgRoute db 'Ingrese la ruta (.arq): ', '$'
     ; END HEADER AND MENU
 
     ; HTML
@@ -50,6 +51,11 @@ column db 00h
     ; COMMAND
 command db 5 dup('$')
 
+    ; ROUTES
+route db 50 dup('$')
+Entryhandler dw ?
+    ; END ROUTES
+
     ; TABLE
 f9 db           '9    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
 f8_5 db         '   :    :    :    :    :    :    :    :    :', 13, 10,'$'
@@ -71,16 +77,19 @@ f1 db           '1    ---  ---  ---  ---  ---  ---  ---  ---', 13, 10, '$'
 f0 db 13, 10,   '   A    B    C    D    E    F    G    H    I', 13, 10, '$'
     ; END OF TABLE
 
-    ; MATRIX. 0 -> Empty. 1 -> White. 2 -> Black
-m9 db 0, 0, 0, 0, 0, 0, 0, 0, 0
-m8 db 0, 0, 0, 0, 0, 0, 0, 0, 0
-m7 db 0, 0, 0, 0, 0, 0, 0, 0, 0
-m6 db 0, 0, 0, 0, 0, 0, 0, 0, 0
-m5 db 0, 0, 0, 0, 0, 0, 0, 0, 0
-m4 db 0, 0, 0, 0, 0, 0, 0, 0, 0
-m3 db 0, 0, 0, 0, 0, 0, 0, 0, 0
-m2 db 0, 0, 0, 0, 0, 0, 0, 0, 0
-m1 db 0, 0, 0, 0, 0, 0, 0, 0, 0
+    ; MATRIX. 20h -> Empty. 57h -> White. 42h -> Black
+m9 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+m8 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+m7 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+m6 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+m5 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+m4 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+m3 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+m2 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+m1 db 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h, 20h
+
+fileContent db 82 dup('$')
+
     ; END OF MATRIX
 
 ; CODE SEGMENT
@@ -183,6 +192,9 @@ main proc
     PutBlackCoin:
         ; PRINT IN THE POSITION THE COIN
         print blackCoin
+        
+
+        returnPutBlackCoin:
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 87
         moveCursor 00h, 00h
@@ -191,11 +203,13 @@ main proc
     PutWhiteCoin:
         ; PRINT IN THE POSITION THE COIN
         print whiteCoin
+        
+
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 66
         moveCursor 00h, 00h
         print blacksTurn
-        jmp Playing
+        jmp Playing    
     INVALIDCOMMAND:
         moveCursor 01h, 00h
         print errorCmd
@@ -204,10 +218,36 @@ main proc
         print cleanChar
         print cleanChar
         print cleanChar
+        print cleanChar
         jmp Playing
     SHOWGAME:
         jmp Playing
     SAVEGAME:
+
+        ; Se crea archivo pero no se genera bien en el texto
+
+        print msgRoute
+
+        Clean route, SIZEOF route, 24h
+
+        getRoute route
+
+        CreateFile route, Entryhandler
+
+        ; CHECK THE GENERATION OF TEXT AND THE WRITE ON FILE MACRO
+
+        ;GetFileText fileContent
+
+        ;getChar
+
+        ;WriteOnFile Entryhandler, fileContent, SIZEOF fileContent
+
+        moveCursor 01h, 00h
+        print cleanChar
+        print cleanChar
+        print cleanChar
+        print cleanChar
+
         jmp Playing
     PASSTURN:
         cmp actualTurn, 66
