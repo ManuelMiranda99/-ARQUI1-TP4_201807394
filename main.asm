@@ -31,6 +31,7 @@ include macros.asm
     header db 9, 9, 'UNIVERSIDAD DE SAN CARLOS DE GUATEMALA', 13, 10, 9, 9, 'FACULTAD DE INGENIERIA', 13, 10, 9, 9, 'CIENCIAS Y SISTEMAS', 13, 10, 9, 9, 'ARQUITECTURA DE COMPUTADORES Y ENSAMBLADORES 1', 13, 10, 9, 9, 'NOMBRE: ANGEL MANUEL MIRANDA ASTURIAS', 13, 10, 9, 9, 'CARNET: 201807394', 13, 10, 9, 9, 'SECCION: A', 13, 10, '$'
     menu db 13, 10, 9, 9, '-_-MENU-_-', 13, 10, 9, 9, '1) Iniciar Juego', 13, 10, 9, 9, '2) Cargar Juego', 13, 10, 9, 9, '3) Salir', 13, 10, '$'
     msgRoute db 'Ingrese la ruta (.arq): ', '$'
+    endGameMsg db 'Juego terminado', 13, 10, '$'
 ; END HEADER AND MENU
 
 ; HTML
@@ -44,9 +45,11 @@ include macros.asm
 
     blacksTurn db 'Turno Negras: ', 13, 10, '$'
     blackCoin db 'FN', '$'
+    blacksWin db '¡¡¡Ganaron las Negras!!!', '$'
 
     whitesTurn db 'Turno Blancas: ', 13, 10, '$'
     whiteCoin db 'FB', '$'
+    whitesWin db '¡¡¡Ganaron las Blancas!!!', '$'
 ; END OF TURN
 
 ; POSITION (VARIABLES FOR THE POSITION WHERE WE ARE GOING TO PUT A COIN)
@@ -118,6 +121,8 @@ main proc
 
     ; PRINCIPAL MENU
     PrincipalMenu:
+        ClearConsole
+        moveCursor 00h, 00h
         print header
         print menu
         getChar        
@@ -129,37 +134,29 @@ main proc
         cmp al, 33h         ; EXIT
             je Exit
     
-    Game:
+    Game:        
+        ; Cleaning the count of passing when a person plays
+        xor bx, bx
         print newLine
-        jmp DrawTable
+        DrawTable
+        jmp Playing
     LoadGame:
         print newLine
-        ClearConsole
-    DrawTable:
-        ClearConsole
-        moveCursor 00h, 00h
-        print blacksTurn
-        print newLine
-        print f9
-        print f8_5
-        print f8
-        print f7_5
-        print f7
-        print f6_5
-        print f6
-        print f5_5
-        print f5
-        print f4_5
-        print f4
-        print f3_5
-        print f3
-        print f2_5
-        print f2
-        print f1_5
-        print f1
-        print f0
-        jmp Playing
-    Playing:
+        print msgRoute
+
+        getRoute route
+
+        OpenFile route, Entryhandler
+
+        ReadFile Entryhandler, fileContent, SIZEOF fileContent
+
+        CloseFile Entryhandler
+
+        DrawTable
+
+        AnalizeText fileContent, SIZEOF fileContent
+        
+    Playing:        
         ; MOVING THE CURSOR TO THE INPUT POSITION
         moveCursor 00h, 0fh
         
@@ -204,6 +201,8 @@ main proc
             je PutBlackCoin
         jmp PutWhiteCoin  
     PutBlackCoin:
+        ; Cleaning the count of passing when a person plays
+        xor bx, bx
         ; PRINT IN THE POSITION THE COIN
         print blackCoin
 
@@ -216,6 +215,8 @@ main proc
         print whitesTurn
         jmp Playing
     PutWhiteCoin:
+        ; Cleaning the count of passing when a person plays
+        xor bx, bx
         ; PRINT IN THE POSITION THE COIN
         print whiteCoin
         
@@ -225,7 +226,7 @@ main proc
         mov actualTurn, 66
         moveCursor 00h, 00h
         print blacksTurn
-        jmp Playing    
+        jmp Playing
     INVALIDCOMMAND:
         moveCursor 01h, 00h
         print errorCmd
@@ -260,6 +261,10 @@ main proc
 
         jmp Playing
     PASSTURN:
+        inc bx
+        cmp bx, 02h
+            je EndGame
+        
         cmp actualTurn, 66
             je PassBlack
         jmp PassWhite
@@ -273,59 +278,66 @@ main proc
             moveCursor 00h, 00h
             print whitesTurn
             jmp Playing
-    EXITGAME:
+    EndGame:
+        ; Contar puntos
         ClearConsole
+        moveCursor 10h, 1ah
+        print endGameMsg
+        getChar
+        jmp PrincipalMenu
+    EXITGAME:
         moveCursor 00h, 00h
         jmp PrincipalMenu    
     Exit:
         mov ah, 4ch     ; END PROGRAM
         xor al, al
         int 21h
-    WriteError:
-        moveCursor 00h, 00h
-        print msgErrorWrite
-        getChar
-        moveCursor 00h, 00h
-        print cleanChar
-        print cleanChar
-        print cleanChar        
-        jmp Playing
-    OpenError:
-        moveCursor 00h, 00h
-        print msgErrorOpen
-        getChar
-        moveCursor 50h, 00h
-        print cleanChar
-        print cleanChar
-        print cleanChar        
-        jmp PrincipalMenu
-    CreateError:
-        moveCursor 00h, 00h
-        print msgErrorCreate
-        getChar
-        moveCursor 50h, 00h
-        print cleanChar
-        print cleanChar
-        print cleanChar        
-        jmp Playing
-    CloseError:
-        moveCursor 00h, 00h
-        print msgErrorClose
-        getChar
-        moveCursor 50h, 00h
-        print cleanChar
-        print cleanChar
-        print cleanChar        
-        jmp Playing
-    ReadError:
-        moveCursor 50h, 00h
-        print msgErrorRead
-        getChar
-        moveCursor 50h, 00h
-        print cleanChar
-        print cleanChar
-        print cleanChar        
-        jmp PrincipalMenu
+    ; Errors
+        WriteError:
+            moveCursor 00h, 00h
+            print msgErrorWrite
+            getChar
+            moveCursor 00h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar        
+            jmp Playing
+        OpenError:
+            moveCursor 00h, 00h
+            print msgErrorOpen
+            getChar
+            moveCursor 50h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar        
+            jmp PrincipalMenu
+        CreateError:
+            moveCursor 00h, 00h
+            print msgErrorCreate
+            getChar
+            moveCursor 50h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar        
+            jmp Playing
+        CloseError:
+            moveCursor 00h, 00h
+            print msgErrorClose
+            getChar
+            moveCursor 50h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar        
+            jmp Playing
+        ReadError:
+            moveCursor 50h, 00h
+            print msgErrorRead
+            getChar
+            moveCursor 50h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar        
+            jmp PrincipalMenu
 main endp
 
 end

@@ -31,6 +31,34 @@ Clean macro string, numBytes, char
     Popear
 endm
 
+; DrawTable Macro
+DrawTable macro
+    Pushear
+    ClearConsole
+    moveCursor 00h, 00h
+    print blacksTurn
+    print newLine
+    print f9
+    print f8_5
+    print f8
+    print f7_5
+    print f7
+    print f6_5
+    print f6
+    print f5_5
+    print f5
+    print f4_5
+    print f4
+    print f3_5
+    print f3
+    print f2_5
+    print f2
+    print f1_5
+    print f1
+    print f0
+    Popear
+endm
+
 ; GET TEXT UNTIL THE USER WRITE ENTER
 getText macro string
     local getCharacter, EndGC, Backspace
@@ -479,9 +507,6 @@ ConcatenateRows macro string
             getChar
             mov al, fileContent9[di]
             mov string[si], al
-            ;moveCursor 01h, 00h
-            ;print cleanChar
-            ;print string[si]
             inc si
             inc di
         Loop RepeatRow9
@@ -494,9 +519,6 @@ ConcatenateRows macro string
             getChar            
             mov al, fileContent8[di]
             mov string[si], al
-            ;moveCursor 01h, 00h
-            ;print cleanChar
-            ;print string[si]
             inc si
             inc di
         Loop RepeatRow8
@@ -509,9 +531,6 @@ ConcatenateRows macro string
             getChar            
             mov al, fileContent7[di]
             mov string[si], al
-            ;moveCursor 01h, 00h
-            ;print cleanChar
-            ;print string[si]
             inc si
             inc di
         Loop RepeatRow7
@@ -524,9 +543,6 @@ ConcatenateRows macro string
             getChar            
             mov al, fileContent6[di]
             mov string[si], al
-            ;moveCursor 01h, 00h
-            ;print cleanChar
-            ;print string[si]
             inc si
             inc di
         Loop RepeatRow6
@@ -539,9 +555,6 @@ ConcatenateRows macro string
             getChar            
             mov al, fileContent5[di]
             mov string[si], al
-            ;moveCursor 01h, 00h
-            ;print cleanChar
-            ;print string[si]
             inc si
             inc di
         Loop RepeatRow5
@@ -554,9 +567,6 @@ ConcatenateRows macro string
             getChar           
             mov al, fileContent4[di] 
             mov string[si], al
-            ;moveCursor 01h, 00h
-            ;print cleanChar
-            ;print string[si]
             inc si
             inc di
         Loop RepeatRow4
@@ -569,9 +579,6 @@ ConcatenateRows macro string
             getChar            
             mov al, fileContent3[di]
             mov string[si], al
-            ;moveCursor 01h, 00h
-            ;print cleanChar
-            ;print string[si]
             inc si
             inc di
         Loop RepeatRow3
@@ -584,9 +591,6 @@ ConcatenateRows macro string
             getChar            
             mov al, fileContent2[di]
             mov string[si], al
-            ;moveCursor 01h, 00h
-            ;print cleanChar
-            ;print string[si]
             inc si
             inc di
         Loop RepeatRow2
@@ -599,12 +603,36 @@ ConcatenateRows macro string
             getChar            
             mov al, fileContent1[di]
             mov string[si], al
-            ;moveCursor 01h, 00h
-            ;print cleanChar
-            ;print string[si]
             inc si
             inc di
         Loop RepeatRow1
+    EndGC:
+        Popear
+endm
+
+AnalizeText macro string, numBytes
+    local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
+    local EndGC
+    Pushear
+    
+    Row1:
+
+    Row2:
+
+    Row3:
+
+    Row4:
+
+    Row5:
+
+    Row6:
+
+    Row7:
+
+    Row8:
+
+    Row9:
+    
     EndGC:
         Popear
 endm
@@ -642,7 +670,7 @@ getRoute macro string
 endm
 
 ; OPEN FILE
-Open macro route, handler
+OpenFile macro route, handler
     Pushear
     mov ah, 3dh
     mov al, 00h
