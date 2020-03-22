@@ -37,6 +37,7 @@ include macros.asm
 ; HTML
     htmlFileName db 'p4/estadoTablero.html'
     htmlContent db 'GG'
+    date db '00/00/0000  00:00:00'
 ; END HTML
 
 ; TURN (15 POSITIONS)
@@ -158,7 +159,7 @@ main proc
 
         DrawTable
 
-        AnalizeText fileContent, rowFile, columnFile
+        ;AnalizeText fileContent, rowFile, columnFile
         
         jmp Playing
     Playing:        
@@ -243,6 +244,7 @@ main proc
         print cleanChar
         jmp Playing
     SHOWGAME:
+        getDateAndHour date
         jmp Playing
     SAVEGAME:
                 

@@ -1005,6 +1005,10 @@ AnalizeText macro string, Prow, Pcolumn
         Popear
 endm
 
+AnalizeRow macro string, Prow
+
+endm
+
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\     FILES     \\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -1095,6 +1099,162 @@ ReadFile macro handler, info, numBytes
     lea dx, info
     int 21h    
     jc ReadError
+endm
+
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+;\\\\\\\\\\\\\\\\\\\\\ GET DATE \\\\\\\\\\\\\\\\\\\\\
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+; PRINCIPAL MACRO FOR DATE AND HOUR
+getDateAndHour macro stringDate
+    
+    Pushear
+    xor si, si
+
+    getDate
+    ; DL = DAY. DH = MONTH
+
+    NumberToString stringDate, dl ; NUMBER -> STRING. DAY
+
+    mov stringDate[si], 2fh ; /
+    inc si
+
+    NumberToString stringDate, dh ; NUMBER -> STRING. MONTH
+
+    mov stringDate[si], 2fh ; /
+    inc si
+
+    mov stringDate[si], 32h ; 2
+    inc si
+
+    mov stringDate[si], 30h ; 0
+    inc si
+
+    mov stringDate[si], 32h ; 2
+    inc si
+
+    mov stringDate[si], 30h ; 0
+    inc si
+
+    mov stringDate[si],20h
+	inc si
+	mov stringDate[si],20h
+	inc si
+
+    getHour
+    ; CH = HOUR. CL = MINUTES.
+    
+    NumberToString stringDate, ch ; NUMBER -> STRING. HOUR
+
+    mov stringDate[si],3ah ; :
+	inc si
+
+    NumberToString stringDate, cl ; NUMBER -> STRING. MINUTES
+
+    mov stringDate[si],3ah ; :
+	inc si
+
+    NumberToString stringDate, dh ; NUMBER -> STRING. SECONDS
+
+    Popear
+endm
+
+NumberToString macro string, numberToConvert
+    Push ax
+    Push bx
+
+    xor ax, ax
+    xor bx, bx
+    mov bl, 0ah
+    mov al, numberToConvert
+    div bl
+
+    getNumber string, al
+    getNumber string, ah
+
+    Pop ax
+    Pop bx
+endm
+
+getNumber macro string, numberToConvert
+    local zero, one, two, three, four, five, six, seven, eight, nine
+    local EndGC
+
+    cmp numberToConvert, 00h
+	    je zero
+	cmp numberToConvert, 01h
+	    je one
+	cmp numberToConvert, 02h
+	    je two
+	cmp numberToConvert, 03h
+	    je three
+	cmp numberToConvert, 04h
+	    je four
+	cmp numberToConvert, 05h
+	    je five
+	cmp numberToConvert, 06h
+	    je six
+	cmp numberToConvert, 07h
+	    je seven
+	cmp numberToConvert, 08h
+	    je eight
+	cmp numberToConvert, 09h
+	    je nine
+	jmp EndGC
+
+	zero:
+		mov string[si], 30h
+		inc si
+		jmp EndGC
+	one:
+		mov string[si], 31h
+		inc si
+		jmp EndGC
+	two:
+		mov string[si], 32h
+		inc si
+		jmp EndGC
+	three:
+		mov string[si], 33h
+		inc si
+		jmp EndGC
+	four:
+		mov string[si], 34h
+		inc si
+		jmp EndGC
+	five:
+		mov string[si], 35h
+		inc si
+		jmp EndGC
+	six:
+		mov string[si], 36h
+		inc si
+		jmp EndGC
+	seven:
+		mov string[si], 37h
+		inc si
+		jmp EndGC
+	eight:
+		mov string[si], 38h
+		inc si
+		jmp EndGC
+	nine:
+		mov string[si], 39h
+		inc si
+		jmp EndGC
+	EndGC:
+endm
+
+; GET DATE
+getDate macro 
+    mov ah, 2ah
+    int 21h
+endm
+
+; GET HOUR
+getHour macro
+    mov ah, 2ch
+    int 21h
 endm
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
