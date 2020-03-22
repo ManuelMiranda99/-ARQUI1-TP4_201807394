@@ -16,15 +16,7 @@ include macros.asm
 ; END SPECIAL CHARACTER
 
 ; TESTING
-    repeatMsg9 db 'Repitiendo 9', '$'
-    repeatMsg8 db 'Repitiendo 8', '$'
-    repeatMsg7 db 'Repitiendo 7', '$'
-    repeatMsg6 db 'Repitiendo 6', '$'
-    repeatMsg5 db 'Repitiendo 5', '$'
-    repeatMsg4 db 'Repitiendo 4', '$'
-    repeatMsg3 db 'Repitiendo 3', '$'
-    repeatMsg2 db 'Repitiendo 2', '$'
-    repeatMsg1 db 'Repitiendo 1', '$'
+    
 ; END TESTING
 
 ; HEADER AND MENU

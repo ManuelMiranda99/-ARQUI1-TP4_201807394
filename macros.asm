@@ -503,8 +503,6 @@ ConcatenateRows macro string
         mov cx, 0bh
         RepeatRow9:
             moveCursor 01h, 00h
-            print repeatMsg9
-            getChar
             mov al, fileContent9[di]
             mov string[si], al
             inc si
@@ -515,8 +513,6 @@ ConcatenateRows macro string
         mov cx, 0bh
         RepeatRow8:
             moveCursor 01h, 00h
-            print repeatMsg8
-            getChar            
             mov al, fileContent8[di]
             mov string[si], al
             inc si
@@ -527,8 +523,6 @@ ConcatenateRows macro string
         mov cx, 0bh
         RepeatRow7:
             moveCursor 01h, 00h
-            print repeatMsg7
-            getChar            
             mov al, fileContent7[di]
             mov string[si], al
             inc si
@@ -539,8 +533,6 @@ ConcatenateRows macro string
         mov cx, 0bh
         RepeatRow6:
             moveCursor 01h, 00h
-            print repeatMsg6
-            getChar            
             mov al, fileContent6[di]
             mov string[si], al
             inc si
@@ -551,8 +543,6 @@ ConcatenateRows macro string
         mov cx, 0bh
         RepeatRow5:
             moveCursor 01h, 00h
-            print repeatMsg5
-            getChar            
             mov al, fileContent5[di]
             mov string[si], al
             inc si
@@ -563,8 +553,6 @@ ConcatenateRows macro string
         mov cx, 0bh
         RepeatRow4:
             moveCursor 01h, 00h
-            print repeatMsg4
-            getChar           
             mov al, fileContent4[di] 
             mov string[si], al
             inc si
@@ -575,8 +563,6 @@ ConcatenateRows macro string
         mov cx, 0bh
         RepeatRow3:
             moveCursor 01h, 00h
-            print repeatMsg3
-            getChar            
             mov al, fileContent3[di]
             mov string[si], al
             inc si
@@ -587,8 +573,6 @@ ConcatenateRows macro string
         mov cx, 0bh
         RepeatRow2:
             moveCursor 01h, 00h
-            print repeatMsg2
-            getChar            
             mov al, fileContent2[di]
             mov string[si], al
             inc si
@@ -599,8 +583,6 @@ ConcatenateRows macro string
         mov cx, 0bh
         RepeatRow1:
             moveCursor 01h, 00h
-            print repeatMsg1
-            getChar            
             mov al, fileContent1[di]
             mov string[si], al
             inc si
@@ -631,10 +613,10 @@ AnalizeText macro string, Prow, Pcolumn
             
                 mov al, string[si]
 
-                cmp al, '42h'
+                cmp al, 42h
                     je PrintBlackCoinRow9
                 
-                cmp al, '57h'
+                cmp al, 57h
                     je PrintWhiteCoinRow9
                 ReturnRepeat9:
                     add Pcolumn, 05h
@@ -652,7 +634,7 @@ AnalizeText macro string, Prow, Pcolumn
             print blackCoin
 
             ; Put the coin in the content that we save
-            mov fileContent9[di], '42h'
+            mov fileContent9[di], 42h
 
             jmp ReturnRepeat9
         PrintWhiteCoinRow9:
@@ -661,7 +643,7 @@ AnalizeText macro string, Prow, Pcolumn
                 print whiteCoin
 
                 ; Put the coin in the content that we save
-                mov fileContent9[di], '57h'
+                mov fileContent9[di], 57h
                 jmp ReturnRepeat9
     Row8:
         ; Repeat 11 times the reading of the file
@@ -673,10 +655,10 @@ AnalizeText macro string, Prow, Pcolumn
                 
                 mov al, string[si]
 
-                cmp al, '42h'
+                cmp al, 42h
                     je PrintBlackCoinRow8
                 
-                cmp al, '57h'
+                cmp al, 57h
                     je PrintWhiteCoinRow8                
                 ReturnRepeat8:
                     add Pcolumn, 05h
@@ -694,7 +676,7 @@ AnalizeText macro string, Prow, Pcolumn
             print blackCoin
 
             ; Put the coin in the content that we save
-            mov fileContent8[di], '42h'
+            mov fileContent8[di], 42h
 
             jmp ReturnRepeat8
         PrintWhiteCoinRow8:
@@ -703,7 +685,7 @@ AnalizeText macro string, Prow, Pcolumn
             print whiteCoin
 
             ; Put the coin in the content that we save
-            mov fileContent8[di], '57h'
+            mov fileContent8[di], 57h
             jmp ReturnRepeat8
     Row7:
         ; Repeat 11 times the reading of the file
@@ -715,10 +697,10 @@ AnalizeText macro string, Prow, Pcolumn
             
             mov al, string[si]
 
-            cmp al, '42h'
+            cmp al, 42h
                 je PrintBlackCoinRow7
             
-            cmp al, '57h'
+            cmp al, 57h
                 je PrintWhiteCoinRow7
             ReturnRepeat7:
                 add Pcolumn, 05h
@@ -736,7 +718,7 @@ AnalizeText macro string, Prow, Pcolumn
             print blackCoin
 
             ; Put the coin in the content that we save
-            mov fileContent7[di], '42h'
+            mov fileContent7[di], 42h
 
             jmp ReturnRepeat7
         PrintWhiteCoinRow7:
@@ -745,7 +727,7 @@ AnalizeText macro string, Prow, Pcolumn
             print whiteCoin
 
             ; Put the coin in the content that we save
-            mov fileContent7[di], '57h'
+            mov fileContent7[di], 57h
             jmp ReturnRepeat7
     Row6:
         ; Repeat 11 times the reading of the file
@@ -757,10 +739,10 @@ AnalizeText macro string, Prow, Pcolumn
             
             mov al, string[si]
 
-            cmp al, '42h'
+            cmp al, 42h
                 je PrintBlackCoinRow6
             
-            cmp al, '57h'
+            cmp al, 57h
                 je PrintWhiteCoinRow6
             ReturnRepeat6:
                 add Pcolumn, 05h
@@ -778,7 +760,7 @@ AnalizeText macro string, Prow, Pcolumn
             print blackCoin
 
             ; Put the coin in the content that we save
-            mov fileContent6[di], '42h'
+            mov fileContent6[di], 42h
 
             jmp ReturnRepeat6
         PrintWhiteCoinRow6:
@@ -787,7 +769,7 @@ AnalizeText macro string, Prow, Pcolumn
             print whiteCoin
 
             ; Put the coin in the content that we save
-            mov fileContent6[di], '57h'
+            mov fileContent6[di], 57h
             jmp ReturnRepeat6
     Row5:
         ; Repeat 11 times the reading of the file
@@ -800,10 +782,10 @@ AnalizeText macro string, Prow, Pcolumn
             
                 mov al, string[si]
 
-                cmp al, '42h'
+                cmp al, 42h
                     je PrintBlackCoinRow5
                 
-                cmp al, '57h'
+                cmp al, 57h
                     je PrintWhiteCoinRow5
                 ReturnRepeat5:
                     add Pcolumn, 05h
@@ -821,7 +803,7 @@ AnalizeText macro string, Prow, Pcolumn
             print blackCoin
 
             ; Put the coin in the content that we save
-            mov fileContent5[di], '42h'
+            mov fileContent5[di], 42h
 
             jmp ReturnRepeat5
         PrintWhiteCoinRow5:
@@ -830,7 +812,7 @@ AnalizeText macro string, Prow, Pcolumn
             print whiteCoin
 
             ; Put the coin in the content that we save
-            mov fileContent5[di], '57h'
+            mov fileContent5[di], 57h
             jmp ReturnRepeat5
     Row4:
         ; Repeat 11 times the reading of the file
@@ -842,10 +824,10 @@ AnalizeText macro string, Prow, Pcolumn
             
                 mov al, string[si]
 
-                cmp al, '42h'
+                cmp al, 42h
                     je PrintBlackCoinRow4
                 
-                cmp al, '57h'
+                cmp al, 57h
                     je PrintWhiteCoinRow4
                 ReturnRepeat4:
                     add Pcolumn, 05h
@@ -863,7 +845,7 @@ AnalizeText macro string, Prow, Pcolumn
             print blackCoin
 
             ; Put the coin in the content that we save
-            mov fileContent4[di], '42h'
+            mov fileContent4[di], 42h
 
             jmp ReturnRepeat4
         PrintWhiteCoinRow4:
@@ -872,7 +854,7 @@ AnalizeText macro string, Prow, Pcolumn
             print whiteCoin
 
             ; Put the coin in the content that we save
-            mov fileContent4[di], '57h'
+            mov fileContent4[di], 57h
             jmp ReturnRepeat4
     Row3:
         ; Repeat 11 times the reading of the file
@@ -885,10 +867,10 @@ AnalizeText macro string, Prow, Pcolumn
             
                 mov al, string[si]
 
-                cmp al, '42h'
+                cmp al, 42h
                     je PrintBlackCoinRow3
                 
-                cmp al, '57h'
+                cmp al, 57h
                     je PrintWhiteCoinRow3
                 ReturnRepeat3:
                     add Pcolumn, 05h
@@ -906,7 +888,7 @@ AnalizeText macro string, Prow, Pcolumn
             print blackCoin
 
             ; Put the coin in the content that we save
-            mov fileContent3[di], '42h'
+            mov fileContent3[di], 42h
 
             jmp ReturnRepeat9
         PrintWhiteCoinRow3:
@@ -915,7 +897,7 @@ AnalizeText macro string, Prow, Pcolumn
             print whiteCoin
 
             ; Put the coin in the content that we save
-            mov fileContent3[di], '57h'
+            mov fileContent3[di], 57h
             jmp ReturnRepeat3
     Row2:
         ; Repeat 11 times the reading of the file
@@ -928,10 +910,10 @@ AnalizeText macro string, Prow, Pcolumn
             
                 mov al, string[si]
 
-                cmp al, '42h'
+                cmp al, 42h
                     je PrintBlackCoinRow2
                 
-                cmp al, '57h'
+                cmp al, 57h
                     je PrintWhiteCoinRow2
                 ReturnRepeat2:
                     add Pcolumn, 05h
@@ -949,7 +931,7 @@ AnalizeText macro string, Prow, Pcolumn
             print blackCoin
 
             ; Put the coin in the content that we save
-            mov fileContent2[di], '42h'
+            mov fileContent2[di], 42h
 
             jmp ReturnRepeat2
         PrintWhiteCoinRow2:
@@ -958,7 +940,7 @@ AnalizeText macro string, Prow, Pcolumn
             print whiteCoin
 
             ; Put the coin in the content that we save
-            mov fileContent2[di], '57h'
+            mov fileContent2[di], 57h
             jmp ReturnRepeat2
     Row1:
         ; Repeat 11 times the reading of the file
@@ -971,10 +953,10 @@ AnalizeText macro string, Prow, Pcolumn
             
                 mov al, string[si]
 
-                cmp al, '42h'
+                cmp al, 42h
                     je PrintBlackCoinRow1
                 
-                cmp al, '57h'
+                cmp al, 57h
                     je PrintWhiteCoinRow1
                 ReturnRepeat1:
                     add Pcolumn, 05h
@@ -990,7 +972,7 @@ AnalizeText macro string, Prow, Pcolumn
             print blackCoin
 
             ; Put the coin in the content that we save
-            mov fileContent1[di], '42h'
+            mov fileContent1[di], 42h
 
             jmp ReturnRepeat1
         PrintWhiteCoinRow1:
@@ -999,7 +981,7 @@ AnalizeText macro string, Prow, Pcolumn
             print whiteCoin
 
             ; Put the coin in the content that we save
-            mov fileContent1[di], '57h'
+            mov fileContent1[di], 57h
             jmp ReturnRepeat1    
     EndGC:
         Popear
