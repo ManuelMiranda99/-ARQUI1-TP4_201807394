@@ -320,11 +320,25 @@ main proc
             print whitesTurn
             jmp Playing
     EndGame:
-        ; Contar puntos
         ClearConsole
         moveCursor 10h, 1ah
         print endGameMsg
         getChar
+
+        ; Generation of the HTML
+
+        getDateAndHour date
+
+        Clean htmlContent, SIZEOF htmlContent, '$'
+        
+        CreateFile htmlFileName, htmlHandler
+
+        GenerateHTML
+        
+        WriteOnFile htmlHandler, htmlContent, SIZEOF htmlContent
+
+        CloseFile htmlHandler
+
         jmp PrincipalMenu
     EXITGAME:
         moveCursor 00h, 00h
