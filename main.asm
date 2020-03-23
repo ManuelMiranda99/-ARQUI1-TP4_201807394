@@ -161,14 +161,13 @@ main proc
     
     Game:        
         ; Cleaning the count of passing when a person plays
-        xor bx, bx
+        mov countT, 00h
         print newLine
         DrawTable
         jmp Playing
     ; Probado
     LoadGame:
-        xor bx, bx
-        mov countT, bx
+        mov countT, 00h
         print newLine
         print msgRoute
 
@@ -189,8 +188,7 @@ main proc
         AnalizeText fileContent, rowFile, columnFile
 
         jmp Playing
-    Playing:        
-        mov bx, countT
+    Playing:                
         ; MOVING THE CURSOR TO THE INPUT POSITION
         moveCursor 00h, 0fh
         ; CLEAN THE INPUT POSITION
@@ -230,7 +228,7 @@ main proc
         jmp PutWhiteCoin  
     PutBlackCoin:
         ; Cleaning the count of passing when a person plays
-        xor bx, bx
+        mov countT, 00h
         ; PRINT IN THE POSITION THE COIN
         print blackCoin
         PutCoinMacro 42h
@@ -241,7 +239,7 @@ main proc
         jmp Playing
     PutWhiteCoin:
         ; Cleaning the count of passing when a person plays
-        xor bx, bx
+        mov countT, 00h
         ; PRINT IN THE POSITION THE COIN
         print whiteCoin
         PutCoinMacro 57h
@@ -251,7 +249,6 @@ main proc
         print blacksTurn
         jmp Playing
     INVALIDCOMMAND:
-        mov countT, bx
         moveCursor 01h, 00h
         print errorCmd
         getChar
@@ -262,7 +259,6 @@ main proc
         print cleanChar
         jmp Playing
     SHOWGAME:
-        mov countT, bx
         getDateAndHour date
 
         Clean htmlContent, SIZEOF htmlContent, '$'
@@ -277,7 +273,6 @@ main proc
 
         jmp Playing
     SAVEGAME:
-        mov countT, bx
                 
         print msgRoute
 
@@ -301,9 +296,8 @@ main proc
 
         jmp Playing
     PASSTURN:
-        inc bx
-        mov countT, bx
-        cmp bx, 02h
+        inc countT
+        cmp countT, 02h
             je EndGame
         
         cmp actualTurn, 66
