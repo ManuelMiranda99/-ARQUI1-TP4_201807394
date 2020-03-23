@@ -511,11 +511,10 @@ ConcatenateRows macro string
     Pushear
     xor si, si    
     xor cx, cx    
-    Row9:     
+    Row9:
         xor di, di   
         mov cx, 0bh
         RepeatRow9:
-            moveCursor 01h, 00h
             mov al, fileContent9[di]
             mov string[si], al
             inc si
@@ -525,7 +524,6 @@ ConcatenateRows macro string
         xor di, di
         mov cx, 0bh
         RepeatRow8:
-            moveCursor 01h, 00h
             mov al, fileContent8[di]
             mov string[si], al
             inc si
@@ -535,7 +533,6 @@ ConcatenateRows macro string
         xor di, di
         mov cx, 0bh
         RepeatRow7:
-            moveCursor 01h, 00h
             mov al, fileContent7[di]
             mov string[si], al
             inc si
@@ -545,7 +542,6 @@ ConcatenateRows macro string
         xor di, di
         mov cx, 0bh
         RepeatRow6:
-            moveCursor 01h, 00h
             mov al, fileContent6[di]
             mov string[si], al
             inc si
@@ -555,7 +551,6 @@ ConcatenateRows macro string
         xor di, di
         mov cx, 0bh
         RepeatRow5:
-            moveCursor 01h, 00h
             mov al, fileContent5[di]
             mov string[si], al
             inc si
@@ -565,7 +560,6 @@ ConcatenateRows macro string
         xor di, di
         mov cx, 0bh
         RepeatRow4:
-            moveCursor 01h, 00h
             mov al, fileContent4[di] 
             mov string[si], al
             inc si
@@ -575,7 +569,6 @@ ConcatenateRows macro string
         xor di, di
         mov cx, 0bh
         RepeatRow3:
-            moveCursor 01h, 00h
             mov al, fileContent3[di]
             mov string[si], al
             inc si
@@ -585,7 +578,6 @@ ConcatenateRows macro string
         xor di, di
         mov cx, 0bh
         RepeatRow2:
-            moveCursor 01h, 00h
             mov al, fileContent2[di]
             mov string[si], al
             inc si
@@ -595,7 +587,6 @@ ConcatenateRows macro string
         xor di, di
         mov cx, 0bh
         RepeatRow1:
-            moveCursor 01h, 00h
             mov al, fileContent1[di]
             mov string[si], al
             inc si

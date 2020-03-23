@@ -54,6 +54,7 @@ include macros.asm
     htmlContent db 1000 dup('$')
 
     date db '00/00/0000  00:00:00'
+    
 ; END HTML
 
 ; TURN (15 POSITIONS)
@@ -84,6 +85,7 @@ include macros.asm
 ; ROUTES
     route db 50 dup('$')
     Entryhandler dw ?
+    htmlHandler dw ?
 ; END ROUTES
 
 ; ERRORS
@@ -183,26 +185,19 @@ main proc
 
         AnalizeText fileContent, rowFile, columnFile
 
-
-        
         jmp Playing
     Playing:        
 
         ; MOVING THE CURSOR TO THE INPUT POSITION
         moveCursor 00h, 0fh
-        
         ; CLEAN THE INPUT POSITION
         print cleanChar
-
         ; MOVING THE CURSOR TO THE INPUT POSITION
         moveCursor 00h, 0fh
-
         ; GET THE COMMAND THAT THE PLAYER PUT AND MOVE THE CURSOR TO THE POSITION
         getText command
-        
         ; ANALIZE THE COMMAND
         getCommand command, row, column 
-
         ; EXIT: ROW = 4fh COLUMN = 4fh
         ; PASS: ROW = 54 COLUMN = 54
         ; SAVE: ROW = 45 COLUMN = 45
@@ -226,7 +221,6 @@ main proc
             je INVALIDCOMMAND
         
         moveCursor row, column
-
         ; COMPARE WHO IS PLAYING
         cmp actualTurn, 66
             je PutBlackCoin
@@ -236,10 +230,7 @@ main proc
         xor bx, bx
         ; PRINT IN THE POSITION THE COIN
         print blackCoin
-
         PutCoinMacro 42h
-        
-        returnPutBlackCoin:
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 87
         moveCursor 00h, 00h
@@ -250,9 +241,7 @@ main proc
         xor bx, bx
         ; PRINT IN THE POSITION THE COIN
         print whiteCoin
-        
         PutCoinMacro 57h
-
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 66
         moveCursor 00h, 00h
@@ -273,14 +262,14 @@ main proc
 
         Clean htmlContent, SIZEOF htmlContent, '$'
         
-        CreateFile htmlFileName, Entryhandler
-        
+        CreateFile htmlFileName, htmlHandler
+
         GenerateHTML
         
-        WriteOnFile Entryhandler, htmlContent, SIZEOF htmlContent
-        
-        CloseFile Entryhandler
-                
+        WriteOnFile htmlHandler, htmlContent, SIZEOF htmlContent
+
+        CloseFile htmlHandler
+
         jmp Playing
     SAVEGAME:
                 
