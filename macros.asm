@@ -987,276 +987,665 @@ AnalizeText macro string, Prow, Pcolumn
         Popear
 endm
 
-AnalizeRow macro string, Prow
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+;\\\\\\\\\\\\\\\\\     HTML    \\\\\\\\\\\\\\\\\\\\\\\
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-endm
+    ; Generate HTML
+    GenerateHTML macro
+        local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
+        local RepeatRow1, RepeatRow2, RepeatRow3, RepeatRow4, RepeatRow5, RepeatRow6, RepeatRow7, RepeatRow8, RepeatRow9
+        local RepeatHTMLHeader1, RepeatHTMLHeader2, RepeatHTMLDate, RepeatHTMLEnd
+
+        Pushear
+
+        ; For the htmlContent
+        xor si, si    
+        ; HTML HEADER
+            mov cx, SIZEOF htmlHeader1
+            ; For the htmlHeader1
+            xor di, di
+            RepeatHTMLHeader1:
+                mov al, htmlHeader1[di]
+                inc di
+                mov htmlContent[si], al
+                inc si
+            Loop RepeatHTMLHeader1        
+
+            ; For the date
+            mov cx, SIZEOF date
+            ; For the date
+            xor di, di
+            RepeatHTMLDate:
+                mov al, date[di]
+                inc di
+                mov htmlContent[si], al
+                inc si
+            Loop RepeatHTMLDate
+
+            mov cx, SIZEOF htmlHeader2
+            ; For the htmlHeader2
+            xor di, di
+            RepeatHTMLHeader2:
+                mov al, htmlHeader2[di]
+                inc di
+                mov htmlContent[si], al
+                inc si
+            Loop RepeatHTMLHeader2 
+
+        ; Beggining of Row 9
+
+            RepeatRow htmlContent, fileContent9
+
+        ; Beggining of Row 8
+            
+            RepeatRow htmlContent, fileContent8
+        ; Beggining of Row 7
+        
+            RepeatRow htmlContent, fileContent7
+        ; Beggining of Row 6
+            
+            RepeatRow htmlContent, fileContent6
+        ; Beggining of Row 5
+
+            RepeatRow htmlContent, fileContent5
+        ; Beggining of Row 4
+
+            RepeatRow htmlContent, fileContent4
+        ; Beggining of Row 3
+
+            RepeatRow htmlContent, fileContent3
+        ; Beggining of Row 2
+
+            RepeatRow htmlContent, fileContent2
+        ; Beggining of Row 1
+
+            RepeatRow htmlContent, fileContent1
+
+        ; HTML END
+            mov cx, SIZEOF htmlEnd
+            ; For the End
+            xor di, di        
+            RepeatHTMLEnd:
+                mov al, htmlEnd[di]
+                inc di
+                mov htmlContent[si], al
+                inc si
+            Loop RepeatHTMLEnd        
+
+        Popear
+
+    endm
+
+    ;htmlBeginRow db '<tr>'
+
+    ;htmlEndRow db '</tr>'    
+
+    RepeatRow macro stringHtml, fileContentX
+        local RepeatHTMLRow1, RepeatHTMLRow2, RepeatAnalize, ReturnAnalize, PNormalCell, PWhiteCell, PBlackCell
+        local ReturnC1, ReturnC2, ReturnC3, ReturnC4, ReturnC5, ReturnC6, ReturnC7, ReturnC8, ReturnC9
+        local NormalC1, WhiteC1, BlackC1
+        local NormalC2, WhiteC2, BlackC2
+        local NormalC3, WhiteC3, BlackC3
+        local NormalC4, WhiteC4, BlackC4
+        local NormalC5, WhiteC5, BlackC5
+        local NormalC6, WhiteC6, BlackC6
+        local NormalC7, WhiteC7, BlackC7
+        local NormalC8, WhiteC8, BlackC8
+        local NormalC9, WhiteC9, BlackC9
+        local Fin
+        mov cx, SIZEOF htmlBeginRow
+        xor di, di
+        RepeatHTMLRow1:
+            mov al, htmlBeginRow[di]
+            inc di
+            mov stringHtml[si], al
+            inc si
+        Loop RepeatHTMLRow1
+
+        ; ANALIZE fileContentX
+        ; COLUMN 1
+            cmp fileContentX[00h], 56h
+                je NormalC1
+            cmp fileContentX[00h], 57h
+                je WhiteC1
+            cmp fileContentX[00h], 42h
+                je BlackC1
+
+            NormalC1:
+                NormalCell stringHtml
+                jmp ReturnC1
+
+            WhiteC1:
+                WhiteCell stringHtml
+                jmp ReturnC1
+
+            BlackC1:
+                BlackCell stringHtml
+                jmp ReturnC1
+
+        ReturnC1:
+        ; COLUMN 2
+            cmp fileContentX[01h], 56h
+                je NormalC2
+            cmp fileContentX[01h], 57h
+                je WhiteC2
+            cmp fileContentX[01h], 42h
+                je BlackC2
+
+            NormalC2:
+                NormalCell stringHtml
+                jmp ReturnC2
+
+            WhiteC2:
+                WhiteCell stringHtml
+                jmp ReturnC2
+
+            BlackC2:
+                BlackCell stringHtml
+                jmp ReturnC2
+
+        ReturnC2:
+        ; COLUMN 3
+            cmp fileContentX[02h], 56h
+                je NormalC3
+            cmp fileContentX[02h], 57h
+                je WhiteC3
+            cmp fileContentX[02h], 42h
+                je BlackC3
+
+            NormalC3:
+                NormalCell stringHtml
+                jmp ReturnC3
+
+            WhiteC3:
+                WhiteCell stringHtml
+                jmp ReturnC3
+
+            BlackC3:
+                BlackCell stringHtml
+                jmp ReturnC3
+
+        ReturnC3:
+        ; COLUMN 4
+            cmp fileContentX[03h], 56h
+                je NormalC4
+            cmp fileContentX[03h], 57h
+                je WhiteC4
+            cmp fileContentX[03h], 42h
+                je BlackC4
+
+            NormalC4:
+                NormalCell stringHtml
+                jmp ReturnC4
+
+            WhiteC4:
+                WhiteCell stringHtml
+                jmp ReturnC4
+
+            BlackC4:
+                BlackCell stringHtml
+                jmp ReturnC4
+
+        ReturnC4:
+        ; COLUMN 5
+            cmp fileContentX[04h], 56h
+                je NormalC5
+            cmp fileContentX[04h], 57h
+                je WhiteC5
+            cmp fileContentX[04h], 42h
+                je BlackC5
+
+            NormalC5:
+                NormalCell stringHtml
+                jmp ReturnC5
+
+            WhiteC5:
+                WhiteCell stringHtml
+                jmp ReturnC5
+
+            BlackC5:
+                BlackCell stringHtml
+                jmp ReturnC5
+
+        ReturnC5:
+        ; COLUMN 6
+            cmp fileContentX[05h], 56h
+                je NormalC6
+            cmp fileContentX[05h], 57h
+                je WhiteC6
+            cmp fileContentX[05h], 42h
+                je BlackC6
+
+            NormalC6:
+                NormalCell stringHtml
+                jmp ReturnC6
+
+            WhiteC6:
+                WhiteCell stringHtml
+                jmp ReturnC6
+
+            BlackC6:
+                BlackCell stringHtml
+                jmp ReturnC6
+
+        ReturnC6:
+        ; COLUMN 7
+            cmp fileContentX[06h], 56h
+                je NormalC7
+            cmp fileContentX[06h], 57h
+                je WhiteC7
+            cmp fileContentX[06h], 42h
+                je BlackC7
+
+            NormalC7:
+                NormalCell stringHtml
+                jmp ReturnC7
+
+            WhiteC7:
+                WhiteCell stringHtml
+                jmp ReturnC7
+
+            BlackC7:
+                BlackCell stringHtml
+                jmp ReturnC7
+
+        ReturnC7:
+        ; COLUMN 8
+            cmp fileContentX[07h], 56h
+                je NormalC8
+            cmp fileContentX[07h], 57h
+                je WhiteC8
+            cmp fileContentX[07h], 42h
+                je BlackC8
+
+            NormalC8:
+                NormalCell stringHtml
+                jmp ReturnC8
+
+            WhiteC8:
+                WhiteCell stringHtml
+                jmp ReturnC8
+
+            BlackC8:
+                BlackCell stringHtml
+                jmp ReturnC8
+
+        ReturnC8:
+        ; COLUMN 9
+            cmp fileContentX[08h], 56h
+                je NormalC9
+            cmp fileContentX[08h], 57h
+                je WhiteC9
+            cmp fileContentX[08h], 42h
+                je BlackC9
+
+            NormalC9:
+                NormalCell stringHtml
+                jmp ReturnC9
+
+            WhiteC9:
+                WhiteCell stringHtml
+                jmp ReturnC9
+
+            BlackC9:
+                BlackCell stringHtml
+                jmp ReturnC9
+
+        ReturnC9:
+
+        mov cx, SIZEOF htmlEndRow
+        xor di, di
+        
+        RepeatHTMLRow2:
+            mov al, htmlEndRow[di]
+            inc di
+            mov stringHtml[si], al
+            inc si
+        Loop RepeatHTMLRow2
+
+    endm
+
+    ; NORMAL
+        ;htmlNormalCell db '<td></td>'
+
+        ;htmlWhiteCell db '<td><img src="white.png"></td>'
+
+        ;htmlBlackCell db '<td><img src="black.png"></td>'
+        NormalCell macro stringHtml
+            local RepeatNormal
+
+            mov cx, SIZEOF htmlNormalCell
+            xor di, di
+
+            RepeatNormal:
+                mov al, htmlNormalCell[di]
+                inc di
+                mov stringHtml[si], al
+                inc si
+            Loop RepeatNormal
+
+        endm
+
+        WhiteCell macro stringHtml
+            local RepeatWhite
+
+            mov cx, SIZEOF htmlWhiteCell
+            xor di, di
+
+            RepeatWhite:
+                mov al, htmlWhiteCell[di]
+                inc di
+                mov stringHtml[si], al
+                inc si
+            Loop RepeatWhite
+
+        endm
+
+        BlackCell macro stringHtml
+            local RepeatBlack
+
+            mov cx, SIZEOF htmlBlackCell
+            xor di, di
+
+            RepeatBlack:
+                mov al, htmlBlackCell[di]
+                inc di
+                mov stringHtml[si], al
+                inc si
+            Loop RepeatBlack
+
+        endm
+
+    ; TERRITORY
+        
+        ;htmlBlackTCell db '<td><img src="tblack.png"></td>'
+
+        ;htmlWhiteTCell db '<td><img src="twhite.png"></td>'
+
+        ;htmlNeutralTCell db '<td><img src="tneutral.png"></td>'
+        NeutralCell macro stringHtml
+
+        endm
+
+        WhiteTCell macro stringHtml
+
+        endm
+
+        BlackTCell macro stringHtml
+
+        endm
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\     FILES     \\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-; RESET FILE CONTENT
-resetFileContent macro
+    ; GET ROUTE OF A FILE
+    getRoute macro string
+        local getCharacter, EndGC, Backspace
+        Pushear
+        xor si, si
+        getCharacter:
+            getChar
+            ; If al == \n
+            cmp al, 0dh
+                je EndGC
+            ; If al == \b
+            cmp al, 08h
+                je Backspace
+            ; else
+            mov string[si], al
+            inc si
+            jmp getCharacter
+        Backspace:
+            mov al, 24h
+            dec si
+            mov string[si], al
+            jmp getCharacter
+        EndGC:        
+            mov al, 00h
+            mov string[si], al
+            Popear
+    endm
 
-endm
-
-
-; GET ROUTE OF A FILE
-getRoute macro string
-    local getCharacter, EndGC, Backspace
-    Pushear
-    xor si, si
-    getCharacter:
-        getChar
-        ; If al == \n
-        cmp al, 0dh
-            je EndGC
-        ; If al == \b
-        cmp al, 08h
-            je Backspace
-        ; else
-        mov string[si], al
-        inc si
-        jmp getCharacter
-    Backspace:
-        mov al, 24h
-        dec si
-        mov string[si], al
-        jmp getCharacter
-    EndGC:        
-        mov al, 00h
-        mov string[si], al
+    ; OPEN FILE
+    OpenFile macro route, handler
+        Pushear
+        mov ah, 3dh
+        mov al, 020h
+        lea dx, route
+        int 21h
+        mov handler, ax
+        ; JUMP IF AN ERROR OCCURRED WHILE OPENING THE FILE
+        jc OpenError    
         Popear
-endm
+    endm
 
-; OPEN FILE
-OpenFile macro route, handler
-    Pushear
-    mov ah, 3dh
-    mov al, 00h
-    lea dx, route
-    int 21h
-    ; JUMP IF AN ERROR OCCURRED WHILE OPENING THE FILE
-    jc OpenError
-    mov handler, ax
-    Popear
-endm
+    ; CLOSE FILE
+    CloseFile macro handler
+        mov ah, 3eh
+        mov bx, handler
+        int 21h
+        ; JUMP IF THE FILE DOESNT CLOSE FINE
+        jc CloseError
+    endm
 
-; CLOSE FILE
-CloseFile macro handler
-    mov ah, 3eh
-    mov bx, handler
-    int 21h
-    ; JUMP IF THE FILE DOESNT CLOSE FINE
-    jc CloseError
-endm
+    ; CREATE FILE
+    CreateFile macro string, handler
+        mov ah, 3ch
+        mov cx, 00h
+        lea dx, string
+        int 21h
+        mov handler, ax
+        ; JUMP IF AN ERROR OCCURS WHILE CREATING THE FILE
+        jc CreateError    
+    endm
 
-; CREATE FILE
-CreateFile macro string, handler
-    mov ah, 3ch
-    mov cx, 00h
-    lea dx, string
-    int 21h
-    ; JUMP IF AN ERROR OCCURS WHILE CREATING THE FILE
-    jc CreateError
-    mov handler, ax
-endm
+    ; WRITE ON FILE
+    WriteOnFile macro handler, info, numBytes
+        PUSH ax
+        PUSH bx
+        PUSH cx
+        PUSh dx
+        
+        mov ah, 40h
+        mov bx, handler
+        mov cx, numBytes
+        lea dx, info
+        int 21h
+        ; JUMP IF AN ERROR OCCURS DURING WRITING IN THE FILE
+        jc WriteError
 
-; WRITE ON FILE
-WriteOnFile macro handler, info, numBytes
-    mov ah, 40h
-    mov bx, handler
-    mov cx, numBytes
-    lea dx, info
-    int 21h
-    ; JUMP IF AN ERROR OCCURS DURING WRITING IN THE FILE
-    jc WriteError
-endm
+        POP dx
+        POP cx
+        POP bx
+        POP ax
+    endm
 
-; READ FILE
-ReadFile macro handler, info, numBytes    
-    mov ah, 3fh
-    mov bx, handler
-    mov cx, numBytes
-    lea dx, info
-    int 21h    
-    jc ReadError
-endm
+    ; READ FILE
+    ReadFile macro handler, info, numBytes    
+        mov ah, 3fh
+        mov bx, handler
+        mov cx, numBytes
+        lea dx, info
+        int 21h    
+        jc ReadError
+    endm
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\\\\\\ GET DATE \\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-; PRINCIPAL MACRO FOR DATE AND HOUR
-getDateAndHour macro stringDate
-    
-    Pushear
-    xor si, si
+    ; PRINCIPAL MACRO FOR DATE AND HOUR
+    getDateAndHour macro stringDate
+        
+        Pushear
+        xor si, si
 
-    getDate
-    ; DL = DAY. DH = MONTH
+        getDate
+        ; DL = DAY. DH = MONTH
 
-    NumberToString stringDate, dl ; NUMBER -> STRING. DAY
+        NumberToString stringDate, dl ; NUMBER -> STRING. DAY
 
-    mov stringDate[si], 2fh ; /
-    inc si
+        mov stringDate[si], 2fh ; /
+        inc si
 
-    NumberToString stringDate, dh ; NUMBER -> STRING. MONTH
+        NumberToString stringDate, dh ; NUMBER -> STRING. MONTH
 
-    mov stringDate[si], 2fh ; /
-    inc si
+        mov stringDate[si], 2fh ; /
+        inc si
 
-    mov stringDate[si], 32h ; 2
-    inc si
+        mov stringDate[si], 32h ; 2
+        inc si
 
-    mov stringDate[si], 30h ; 0
-    inc si
+        mov stringDate[si], 30h ; 0
+        inc si
 
-    mov stringDate[si], 32h ; 2
-    inc si
+        mov stringDate[si], 32h ; 2
+        inc si
 
-    mov stringDate[si], 30h ; 0
-    inc si
+        mov stringDate[si], 30h ; 0
+        inc si
 
-    mov stringDate[si],20h
-	inc si
-	mov stringDate[si],20h
-	inc si
+        mov stringDate[si],20h
+        inc si
+        mov stringDate[si],20h
+        inc si
 
-    getHour
-    ; CH = HOUR. CL = MINUTES.
-    
-    NumberToString stringDate, ch ; NUMBER -> STRING. HOUR
+        getHour
+        ; CH = HOUR. CL = MINUTES.
+        
+        NumberToString stringDate, ch ; NUMBER -> STRING. HOUR
 
-    mov stringDate[si],3ah ; :
-	inc si
+        mov stringDate[si],3ah ; :
+        inc si
 
-    NumberToString stringDate, cl ; NUMBER -> STRING. MINUTES
+        NumberToString stringDate, cl ; NUMBER -> STRING. MINUTES
 
-    mov stringDate[si],3ah ; :
-	inc si
+        mov stringDate[si],3ah ; :
+        inc si
 
-    NumberToString stringDate, dh ; NUMBER -> STRING. SECONDS
+        NumberToString stringDate, dh ; NUMBER -> STRING. SECONDS
 
-    Popear
-endm
+        Popear
+    endm
 
-NumberToString macro string, numberToConvert
-    Push ax
-    Push bx
+    NumberToString macro string, numberToConvert
+        Push ax
+        Push bx
 
-    xor ax, ax
-    xor bx, bx
-    mov bl, 0ah
-    mov al, numberToConvert
-    div bl
+        xor ax, ax
+        xor bx, bx
+        mov bl, 0ah
+        mov al, numberToConvert
+        div bl
 
-    getNumber string, al
-    getNumber string, ah
+        getNumber string, al
+        getNumber string, ah
 
-    Pop ax
-    Pop bx
-endm
+        Pop ax
+        Pop bx
+    endm
 
-getNumber macro string, numberToConvert
-    local zero, one, two, three, four, five, six, seven, eight, nine
-    local EndGC
+    getNumber macro string, numberToConvert
+        local zero, one, two, three, four, five, six, seven, eight, nine
+        local EndGC
 
-    cmp numberToConvert, 00h
-	    je zero
-	cmp numberToConvert, 01h
-	    je one
-	cmp numberToConvert, 02h
-	    je two
-	cmp numberToConvert, 03h
-	    je three
-	cmp numberToConvert, 04h
-	    je four
-	cmp numberToConvert, 05h
-	    je five
-	cmp numberToConvert, 06h
-	    je six
-	cmp numberToConvert, 07h
-	    je seven
-	cmp numberToConvert, 08h
-	    je eight
-	cmp numberToConvert, 09h
-	    je nine
-	jmp EndGC
+        cmp numberToConvert, 00h
+            je zero
+        cmp numberToConvert, 01h
+            je one
+        cmp numberToConvert, 02h
+            je two
+        cmp numberToConvert, 03h
+            je three
+        cmp numberToConvert, 04h
+            je four
+        cmp numberToConvert, 05h
+            je five
+        cmp numberToConvert, 06h
+            je six
+        cmp numberToConvert, 07h
+            je seven
+        cmp numberToConvert, 08h
+            je eight
+        cmp numberToConvert, 09h
+            je nine
+        jmp EndGC
 
-	zero:
-		mov string[si], 30h
-		inc si
-		jmp EndGC
-	one:
-		mov string[si], 31h
-		inc si
-		jmp EndGC
-	two:
-		mov string[si], 32h
-		inc si
-		jmp EndGC
-	three:
-		mov string[si], 33h
-		inc si
-		jmp EndGC
-	four:
-		mov string[si], 34h
-		inc si
-		jmp EndGC
-	five:
-		mov string[si], 35h
-		inc si
-		jmp EndGC
-	six:
-		mov string[si], 36h
-		inc si
-		jmp EndGC
-	seven:
-		mov string[si], 37h
-		inc si
-		jmp EndGC
-	eight:
-		mov string[si], 38h
-		inc si
-		jmp EndGC
-	nine:
-		mov string[si], 39h
-		inc si
-		jmp EndGC
-	EndGC:
-endm
+        zero:
+            mov string[si], 30h
+            inc si
+            jmp EndGC
+        one:
+            mov string[si], 31h
+            inc si
+            jmp EndGC
+        two:
+            mov string[si], 32h
+            inc si
+            jmp EndGC
+        three:
+            mov string[si], 33h
+            inc si
+            jmp EndGC
+        four:
+            mov string[si], 34h
+            inc si
+            jmp EndGC
+        five:
+            mov string[si], 35h
+            inc si
+            jmp EndGC
+        six:
+            mov string[si], 36h
+            inc si
+            jmp EndGC
+        seven:
+            mov string[si], 37h
+            inc si
+            jmp EndGC
+        eight:
+            mov string[si], 38h
+            inc si
+            jmp EndGC
+        nine:
+            mov string[si], 39h
+            inc si
+            jmp EndGC
+        EndGC:
+    endm
 
-; GET DATE
-getDate macro 
-    mov ah, 2ah
-    int 21h
-endm
+    ; GET DATE
+    getDate macro 
+        mov ah, 2ah
+        int 21h
+    endm
 
-; GET HOUR
-getHour macro
-    mov ah, 2ch
-    int 21h
-endm
+    ; GET HOUR
+    getHour macro
+        mov ah, 2ch
+        int 21h
+    endm
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\\\ RECOVER THINGS \\\\\\\\\\\\\\\\\\
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-Pushear macro
-    push ax
-    push bx
-    push cx
-    push dx
-    push si
-    push di
-endm
+    Pushear macro
+        push ax
+        push bx
+        push cx
+        push dx
+        push si
+        push di
+    endm
 
-Popear macro                    
-    pop di
-    pop si
-    pop dx
-    pop cx
-    pop bx
-    pop ax
-endm
+    Popear macro                    
+        pop di
+        pop si
+        pop dx
+        pop cx
+        pop bx
+        pop ax
+    endm

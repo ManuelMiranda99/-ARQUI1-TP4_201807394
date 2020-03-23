@@ -16,7 +16,7 @@ include macros.asm
 ; END SPECIAL CHARACTER
 
 ; TESTING
-    
+    testingM db 'Prueba...', '$'
 ; END TESTING
 
 ; HEADER AND MENU
@@ -27,8 +27,32 @@ include macros.asm
 ; END HEADER AND MENU
 
 ; HTML
-    htmlFileName db 'p4/estadoTablero.html'
-    htmlContent db 'GG'
+    htmlFileName db 'p4/est.html', 00h
+    
+    htmlHeader1 db '<!DOCTYPE html><html><header><title>Reporte HTML</title><link rel="StyleSheet" href="style.css" type="text/css"></header><body><h1 align="center">'
+    
+    htmlHeader2 db '</h1><br><div class="tablero"><table>'
+
+    htmlBeginRow db '<tr>'
+
+    htmlEndRow db '</tr>'    
+
+    htmlNormalCell db '<td></td>'
+
+    htmlWhiteCell db '<td><img src="white.png"></td>'
+
+    htmlBlackCell db '<td><img src="black.png"></td>'
+
+    htmlBlackTCell db '<td><img src="tblack.png"></td>'
+
+    htmlWhiteTCell db '<td><img src="twhite.png"></td>'
+
+    htmlNeutralTCell db '<td><img src="tneutral.png"></td>'
+
+    htmlEnd db '</table></div></body></html>  '
+    
+    htmlContent db 1000 dup('$')
+
     date db '00/00/0000  00:00:00'
 ; END HTML
 
@@ -141,9 +165,13 @@ main proc
         print newLine
         print msgRoute
 
+        Clean route, SIZEOF route, 24h
+
         getRoute route
 
         OpenFile route, Entryhandler
+
+        Clean fileContent, SIZEOF fileContent, 56h
 
         ReadFile Entryhandler, fileContent, SIZEOF fileContent
 
@@ -151,7 +179,7 @@ main proc
 
         DrawTable
 
-        ;AnalizeText fileContent, rowFile, columnFile
+        AnalizeText fileContent, rowFile, columnFile
         
         jmp Playing
     Playing:        
@@ -237,17 +265,30 @@ main proc
         jmp Playing
     SHOWGAME:
         getDateAndHour date
+
+        Clean htmlContent, SIZEOF htmlContent, '$'
+        
+        CreateFile htmlFileName, Entryhandler
+        
+        GenerateHTML
+        
+        ;WriteOnFile Entryhandler, htmlContent, SIZEOF htmlContent
+        
+        ;CloseFile Entryhandler
+                
         jmp Playing
     SAVEGAME:
                 
         print msgRoute
 
+        Clean route, SIZEOF route, 24h
+
         getRoute route
-
+        
         CreateFile route, Entryhandler          
-
+        
         ConcatenateRows fileContent
-
+    
         WriteOnFile Entryhandler, fileContent, SIZEOF fileContent
 
         CloseFile Entryhandler
@@ -293,46 +334,46 @@ main proc
         int 21h
     ; Errors
         WriteError:
-            moveCursor 00h, 00h
+            moveCursor 01h, 00h
             print msgErrorWrite
             getChar
-            moveCursor 00h, 00h
+            moveCursor 01h, 00h
             print cleanChar
             print cleanChar
             print cleanChar        
             jmp Playing
         OpenError:
-            moveCursor 00h, 00h
+            moveCursor 01h, 00h
             print msgErrorOpen
             getChar
-            moveCursor 50h, 00h
+            moveCursor 01h, 00h
             print cleanChar
             print cleanChar
             print cleanChar        
             jmp PrincipalMenu
         CreateError:
-            moveCursor 00h, 00h
+            moveCursor 01h, 00h
             print msgErrorCreate
             getChar
-            moveCursor 50h, 00h
+            moveCursor 01h, 00h
             print cleanChar
             print cleanChar
             print cleanChar        
             jmp Playing
         CloseError:
-            moveCursor 00h, 00h
+            moveCursor 01h, 00h
             print msgErrorClose
             getChar
-            moveCursor 50h, 00h
+            moveCursor 01h, 00h
             print cleanChar
             print cleanChar
             print cleanChar        
             jmp Playing
         ReadError:
-            moveCursor 50h, 00h
+            moveCursor 01h, 00h
             print msgErrorRead
             getChar
-            moveCursor 50h, 00h
+            moveCursor 01h, 00h
             print cleanChar
             print cleanChar
             print cleanChar        
