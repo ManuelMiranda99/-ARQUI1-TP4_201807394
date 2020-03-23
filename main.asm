@@ -13,6 +13,7 @@ include macros.asm
     newLine db 13, 10, '$'
     cleanChar db '             ', '$'
     errorCmd db 'Comando de juego invalido', '$'
+    countT dw 00h
 ; END SPECIAL CHARACTER
 
 ; TESTING
@@ -51,7 +52,7 @@ include macros.asm
 
     htmlEnd db '</table></div></body></html>  '
     
-    htmlContent db 1000 dup('$')
+    htmlContent db 2500 dup('$')
 
     date db '00/00/0000  00:00:00'
     
@@ -166,6 +167,8 @@ main proc
         jmp Playing
     ; Probado
     LoadGame:
+        xor bx, bx
+        mov countT, bx
         print newLine
         print msgRoute
 
@@ -187,7 +190,7 @@ main proc
 
         jmp Playing
     Playing:        
-
+        mov bx, countT
         ; MOVING THE CURSOR TO THE INPUT POSITION
         moveCursor 00h, 0fh
         ; CLEAN THE INPUT POSITION
@@ -248,6 +251,7 @@ main proc
         print blacksTurn
         jmp Playing
     INVALIDCOMMAND:
+        mov countT, bx
         moveCursor 01h, 00h
         print errorCmd
         getChar
@@ -258,6 +262,7 @@ main proc
         print cleanChar
         jmp Playing
     SHOWGAME:
+        mov countT, bx
         getDateAndHour date
 
         Clean htmlContent, SIZEOF htmlContent, '$'
@@ -272,6 +277,7 @@ main proc
 
         jmp Playing
     SAVEGAME:
+        mov countT, bx
                 
         print msgRoute
 
@@ -296,6 +302,7 @@ main proc
         jmp Playing
     PASSTURN:
         inc bx
+        mov countT, bx
         cmp bx, 02h
             je EndGame
         
@@ -313,11 +320,25 @@ main proc
             print whitesTurn
             jmp Playing
     EndGame:
-        ; Contar puntos
         ClearConsole
         moveCursor 10h, 1ah
         print endGameMsg
         getChar
+
+        ; Generation of the HTML
+
+        getDateAndHour date
+
+        Clean htmlContent, SIZEOF htmlContent, '$'
+        
+        CreateFile htmlFileName, htmlHandler
+
+        GenerateHTML
+        
+        WriteOnFile htmlHandler, htmlContent, SIZEOF htmlContent
+
+        CloseFile htmlHandler
+
         jmp PrincipalMenu
     EXITGAME:
         moveCursor 00h, 00h
