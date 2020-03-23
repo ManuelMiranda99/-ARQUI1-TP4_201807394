@@ -142,6 +142,7 @@ main proc
 
     ; PRINCIPAL MENU
     PrincipalMenu:
+        ;CleanRows
         ClearConsole
         moveCursor 00h, 00h
         print header
@@ -161,6 +162,7 @@ main proc
         print newLine
         DrawTable
         jmp Playing
+    ; Probado
     LoadGame:
         print newLine
         print msgRoute
@@ -177,12 +179,15 @@ main proc
 
         CloseFile Entryhandler
 
-        DrawTable
+        DrawTable        
 
         AnalizeText fileContent, rowFile, columnFile
+
+
         
         jmp Playing
     Playing:        
+
         ; MOVING THE CURSOR TO THE INPUT POSITION
         moveCursor 00h, 0fh
         
@@ -285,8 +290,8 @@ main proc
 
         getRoute route
         
-        CreateFile route, Entryhandler          
-        
+        CreateFile route, Entryhandler                  
+
         ConcatenateRows fileContent
     
         WriteOnFile Entryhandler, fileContent, SIZEOF fileContent

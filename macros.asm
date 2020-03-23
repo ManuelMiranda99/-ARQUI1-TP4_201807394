@@ -31,6 +31,19 @@ Clean macro string, numBytes, char
     Popear
 endm
 
+; CLEAN ROWS
+CleanRows macro
+    Clean fileContent9, 09h, 56h
+    Clean fileContent8, 09h, 56h
+    Clean fileContent7, 09h, 56h
+    Clean fileContent6, 09h, 56h
+    Clean fileContent5, 09h, 56h
+    Clean fileContent4, 09h, 56h
+    Clean fileContent3, 09h, 56h
+    Clean fileContent2, 09h, 56h
+    Clean fileContent1, 09h, 56h
+endm
+
 ; DrawTable Macro
 DrawTable macro
     Pushear
@@ -890,7 +903,7 @@ AnalizeText macro string, Prow, Pcolumn
             ; Put the coin in the content that we save
             mov fileContent3[di], 42h
 
-            jmp ReturnRepeat9
+            jmp ReturnRepeat3
         PrintWhiteCoinRow3:
             ; Put the coin in the console
             moveCursor Prow, Pcolumn            
