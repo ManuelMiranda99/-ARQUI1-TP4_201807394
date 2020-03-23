@@ -62,11 +62,11 @@ include macros.asm
 
     blacksTurn db 'Turno Negras: ', 13, 10, '$'
     blackCoin db 'FN', '$'
-    blacksWin db '¡¡¡Ganaron las Negras!!!', '$'
+    ;blacksWin db '¡¡¡Ganaron las Negras!!!', '$'
 
     whitesTurn db 'Turno Blancas: ', 13, 10, '$'
     whiteCoin db 'FB', '$'
-    whitesWin db '¡¡¡Ganaron las Blancas!!!', '$'
+    ;whitesWin db '¡¡¡Ganaron las Blancas!!!', '$'
 ; END OF TURN
 
 ; POSITION (VARIABLES FOR THE POSITION WHERE WE ARE GOING TO PUT A COIN)
@@ -277,9 +277,9 @@ main proc
         
         GenerateHTML
         
-        ;WriteOnFile Entryhandler, htmlContent, SIZEOF htmlContent
+        WriteOnFile Entryhandler, htmlContent, SIZEOF htmlContent
         
-        ;CloseFile Entryhandler
+        CloseFile Entryhandler
                 
         jmp Playing
     SAVEGAME:

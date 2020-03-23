@@ -1005,9 +1005,7 @@ endm
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     ; Generate HTML
-    GenerateHTML macro
-        local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
-        local RepeatRow1, RepeatRow2, RepeatRow3, RepeatRow4, RepeatRow5, RepeatRow6, RepeatRow7, RepeatRow8, RepeatRow9
+    GenerateHTML macro  
         local RepeatHTMLHeader1, RepeatHTMLHeader2, RepeatHTMLDate, RepeatHTMLEnd
 
         Pushear
