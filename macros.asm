@@ -451,35 +451,44 @@ PutCoinMacro macro char
             je Row9
     ; ASSIGN VALUES FOR ROWs
         Row1:
-            mov fileContent1[si], char
+            CellIsEmpty fileContent1[si], char
             jmp EndGC
         Row2:
-            mov fileContent2[si], char
+            CellIsEmpty fileContent2[si], char
             jmp EndGC
         Row3:
-            mov fileContent3[si], char
+            CellIsEmpty fileContent3[si], char
             jmp EndGC
         Row4:
-            mov fileContent4[si], char
+            CellIsEmpty fileContent4[si], char
             jmp EndGC
         Row5:
-            mov fileContent5[si], char
+            CellIsEmpty fileContent5[si], char
             jmp EndGC
         Row6:
-            mov fileContent6[si], char
+            CellIsEmpty fileContent6[si], char
             jmp EndGC
         Row7:
-            mov fileContent7[si], char
+            CellIsEmpty fileContent7[si], char
             jmp EndGC
         Row8:
-            mov fileContent8[si], char
+            CellIsEmpty fileContent8[si], char
             jmp EndGC
         Row9:
-            mov fileContent9[si], char
+            CellIsEmpty fileContent9[si], char
             jmp EndGC
     
     EndGC:
         Popear        
+endm
+
+CellIsEmpty macro string, char
+    local PutChar
+    cmp string, 56h
+        je PutChar
+    jmp invalidCellM
+    PutChar:
+        mov string, char
 endm
 
 ; Move cursor

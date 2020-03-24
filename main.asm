@@ -13,6 +13,12 @@ include macros.asm
     newLine db 13, 10, '$'
     cleanChar db '             ', '$'
     errorCmd db 'Comando de juego invalido', '$'
+
+    invalidCell db 'Movimiento invalido, celda ocupada', '$'
+    suicideMove db 'Movimiento suicida no valido', '$'
+    koRule db 'Violacion a la regla ko', '$'
+
+    removeCoin db '  ', '$'
     countT dw 00h
 ; END SPECIAL CHARACTER
 
@@ -387,6 +393,36 @@ main proc
             print cleanChar
             print cleanChar        
             jmp PrincipalMenu
+        SuicidalMove:
+            moveCursor 01h, 00h
+            print suicideMove
+            getChar
+            moveCursor 01h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar     
+            print cleanChar   
+            jmp Playing
+        KoRuleMsg:
+            moveCursor 01h, 00h
+            print koRule            
+            getChar
+            moveCursor 01h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar
+            print cleanChar
+            jmp Playing
+        invalidCellM:
+            moveCursor 01h, 00h
+            print invalidCell
+            getChar
+            moveCursor 01h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar   
+            print cleanChar     
+            jmp Playing
 main endp
 
 end
