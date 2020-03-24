@@ -451,46 +451,54 @@ PutCoinMacro macro char, coin
             je Row9
     ; ASSIGN VALUES FOR ROWs
         Row1:
-            CellIsEmpty fileContent1[si], char, coin
+            CellIsEmpty fileContent1[si], char
             jmp EndGC
         Row2:
-            CellIsEmpty fileContent2[si], char, coin
+            CellIsEmpty fileContent2[si], char
             jmp EndGC
         Row3:
-            CellIsEmpty fileContent3[si], char, coin
+            CellIsEmpty fileContent3[si], char
             jmp EndGC
         Row4:
-            CellIsEmpty fileContent4[si], char, coin
+            CellIsEmpty fileContent4[si], char
             jmp EndGC
         Row5:
-            CellIsEmpty fileContent5[si], char, coin
+            CellIsEmpty fileContent5[si], char
             jmp EndGC
         Row6:
-            CellIsEmpty fileContent6[si], char, coin
+            CellIsEmpty fileContent6[si], char
             jmp EndGC
         Row7:
-            CellIsEmpty fileContent7[si], char, coin
+            CellIsEmpty fileContent7[si], char
             jmp EndGC
         Row8:
-            CellIsEmpty fileContent8[si], char, coin
+            CellIsEmpty fileContent8[si], char
             jmp EndGC
         Row9:
-            CellIsEmpty fileContent9[si], char, coin
+            CellIsEmpty fileContent9[si], char
             jmp EndGC
     
     EndGC:
+        PrintCoin coin
         Popear        
 endm
 
-CellIsEmpty macro string, char, coin
+CellIsEmpty macro string, char
     local PutChar
     cmp string, 56h
         je PutChar
     jmp invalidCellM
     PutChar:
         mov string, char
-        moveCursor row, column
-        print coin
+endm
+
+CheckLiberties macro
+
+endm
+
+PrintCoin macro coin
+    moveCursor row, column
+    print coin
 endm
 
 ; Move cursor
