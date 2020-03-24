@@ -366,7 +366,7 @@ getCommand macro string, Nrow, Ncolumn
 endm
 
 ; PUT COIN IN A PLACE
-PutCoinMacro macro char
+PutCoinMacro macro char, coin
     local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
     local Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9
     local CompareColumns, CompareRows
@@ -451,44 +451,46 @@ PutCoinMacro macro char
             je Row9
     ; ASSIGN VALUES FOR ROWs
         Row1:
-            CellIsEmpty fileContent1[si], char
+            CellIsEmpty fileContent1[si], char, coin
             jmp EndGC
         Row2:
-            CellIsEmpty fileContent2[si], char
+            CellIsEmpty fileContent2[si], char, coin
             jmp EndGC
         Row3:
-            CellIsEmpty fileContent3[si], char
+            CellIsEmpty fileContent3[si], char, coin
             jmp EndGC
         Row4:
-            CellIsEmpty fileContent4[si], char
+            CellIsEmpty fileContent4[si], char, coin
             jmp EndGC
         Row5:
-            CellIsEmpty fileContent5[si], char
+            CellIsEmpty fileContent5[si], char, coin
             jmp EndGC
         Row6:
-            CellIsEmpty fileContent6[si], char
+            CellIsEmpty fileContent6[si], char, coin
             jmp EndGC
         Row7:
-            CellIsEmpty fileContent7[si], char
+            CellIsEmpty fileContent7[si], char, coin
             jmp EndGC
         Row8:
-            CellIsEmpty fileContent8[si], char
+            CellIsEmpty fileContent8[si], char, coin
             jmp EndGC
         Row9:
-            CellIsEmpty fileContent9[si], char
+            CellIsEmpty fileContent9[si], char, coin
             jmp EndGC
     
     EndGC:
         Popear        
 endm
 
-CellIsEmpty macro string, char
+CellIsEmpty macro string, char, coin
     local PutChar
     cmp string, 56h
         je PutChar
     jmp invalidCellM
     PutChar:
         mov string, char
+        moveCursor row, column
+        print coin
 endm
 
 ; Move cursor

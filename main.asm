@@ -227,28 +227,25 @@ main proc
         cmp row, 43h
             je INVALIDCOMMAND
         
-        moveCursor row, column
         ; COMPARE WHO IS PLAYING
         cmp actualTurn, 66
             je PutBlackCoin
-        jmp PutWhiteCoin  
-    PutBlackCoin:
+        jmp PutWhiteCoin
+    PutBlackCoin:        
+        ; VALIDATE THE POSITION AND PRINT IN THE POSITION THE COIN
+        PutCoinMacro 42h, blackCoin
         ; Cleaning the count of passing when a person plays
         mov countT, 00h
-        ; PRINT IN THE POSITION THE COIN
-        print blackCoin
-        PutCoinMacro 42h
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 87
         moveCursor 00h, 00h
         print whitesTurn
         jmp Playing
-    PutWhiteCoin:
+    PutWhiteCoin:        
+        ; VALIDATE THE POSITION AND PRINT IN THE POSITION THE COIN
+        PutCoinMacro 57h, whiteCoin
         ; Cleaning the count of passing when a person plays
         mov countT, 00h
-        ; PRINT IN THE POSITION THE COIN
-        print whiteCoin
-        PutCoinMacro 57h
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 66
         moveCursor 00h, 00h
