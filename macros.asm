@@ -1107,12 +1107,24 @@ endm
 
         ; ANALIZE fileContentX
         ; COLUMN 1
+            ; Empty Cell
             cmp fileContentX[00h], 56h
                 je NormalC1
+            ; White Coin
             cmp fileContentX[00h], 57h
                 je WhiteC1
+            ; Black Coin
             cmp fileContentX[00h], 42h
                 je BlackC1
+            ; Neutral Territory
+            cmp fileContentX[00h], 55h
+                je NormalTC1
+            ; White Territory
+            cmp fileContentX[00h], 58h
+                je WhiteTC1
+            ; Black Territory
+            cmp fileContentX[00h], 43h
+                je BlackTC1
 
             NormalC1:
                 NormalCell stringHtml
@@ -1126,14 +1138,38 @@ endm
                 BlackCell stringHtml
                 jmp ReturnC1
 
+            NormalTC1:
+                NormalTCell stringHtml
+                jmp ReturnC1
+
+            WhiteTC1:
+                WhiteTCell stringHtml
+                jmp ReturnC1
+
+            BlackTC1:
+                BlackTCell stringHtml
+                jmp ReturnC1
+
         ReturnC1:
         ; COLUMN 2
-            cmp fileContentX[01h], 56h
+            ; Empty Cell
+            cmp fileContentX[00h], 56h
                 je NormalC2
-            cmp fileContentX[01h], 57h
+            ; White Coin
+            cmp fileContentX[00h], 57h
                 je WhiteC2
-            cmp fileContentX[01h], 42h
+            ; Black Coin
+            cmp fileContentX[00h], 42h
                 je BlackC2
+            ; Neutral Territory
+            cmp fileContentX[00h], 55h
+                je NormalTC2
+            ; White Territory
+            cmp fileContentX[00h], 58h
+                je WhiteTC2
+            ; Black Territory
+            cmp fileContentX[00h], 43h
+                je BlackTC2
 
             NormalC2:
                 NormalCell stringHtml
@@ -1147,14 +1183,38 @@ endm
                 BlackCell stringHtml
                 jmp ReturnC2
 
+            NormalTC2:
+                NormalTCell stringHtml
+                jmp ReturnC2
+
+            WhiteTC2:
+                WhiteTCell stringHtml
+                jmp ReturnC2
+
+            BlackTC2:
+                BlackTCell stringHtml
+                jmp ReturnC2
+
         ReturnC2:
         ; COLUMN 3
-            cmp fileContentX[02h], 56h
+            ; Empty Cell
+            cmp fileContentX[00h], 56h
                 je NormalC3
-            cmp fileContentX[02h], 57h
+            ; White Coin
+            cmp fileContentX[00h], 57h
                 je WhiteC3
-            cmp fileContentX[02h], 42h
+            ; Black Coin
+            cmp fileContentX[00h], 42h
                 je BlackC3
+            ; Neutral Territory
+            cmp fileContentX[00h], 55h
+                je NormalTC3
+            ; White Territory
+            cmp fileContentX[00h], 58h
+                je WhiteTC3
+            ; Black Territory
+            cmp fileContentX[00h], 43h
+                je BlackTC3
 
             NormalC3:
                 NormalCell stringHtml
@@ -1168,14 +1228,38 @@ endm
                 BlackCell stringHtml
                 jmp ReturnC3
 
+            NormalTC3:
+                NormalTCell stringHtml
+                jmp ReturnC3
+
+            WhiteTC3:
+                WhiteTCell stringHtml
+                jmp ReturnC3
+
+            BlackTC3:
+                BlackTCell stringHtml
+                jmp ReturnC3
+
         ReturnC3:
         ; COLUMN 4
-            cmp fileContentX[03h], 56h
+            ; Empty Cell
+            cmp fileContentX[00h], 56h
                 je NormalC4
-            cmp fileContentX[03h], 57h
+            ; White Coin
+            cmp fileContentX[00h], 57h
                 je WhiteC4
-            cmp fileContentX[03h], 42h
+            ; Black Coin
+            cmp fileContentX[00h], 42h
                 je BlackC4
+            ; Neutral Territory
+            cmp fileContentX[00h], 55h
+                je NormalTC4
+            ; White Territory
+            cmp fileContentX[00h], 58h
+                je WhiteTC4
+            ; Black Territory
+            cmp fileContentX[00h], 43h
+                je BlackTC4
 
             NormalC4:
                 NormalCell stringHtml
@@ -1189,14 +1273,38 @@ endm
                 BlackCell stringHtml
                 jmp ReturnC4
 
+            NormalTC4:
+                NormalTCell stringHtml
+                jmp ReturnC4
+
+            WhiteTC4:
+                WhiteTCell stringHtml
+                jmp ReturnC4
+
+            BlackTC4:
+                BlackTCell stringHtml
+                jmp ReturnC4
+
         ReturnC4:
         ; COLUMN 5
-            cmp fileContentX[04h], 56h
+            ; Empty Cell
+            cmp fileContentX[00h], 56h
                 je NormalC5
-            cmp fileContentX[04h], 57h
+            ; White Coin
+            cmp fileContentX[00h], 57h
                 je WhiteC5
-            cmp fileContentX[04h], 42h
+            ; Black Coin
+            cmp fileContentX[00h], 42h
                 je BlackC5
+            ; Neutral Territory
+            cmp fileContentX[00h], 55h
+                je NormalTC5
+            ; White Territory
+            cmp fileContentX[00h], 58h
+                je WhiteTC5
+            ; Black Territory
+            cmp fileContentX[00h], 43h
+                je BlackTC5
 
             NormalC5:
                 NormalCell stringHtml
@@ -1210,14 +1318,38 @@ endm
                 BlackCell stringHtml
                 jmp ReturnC5
 
+            NormalTC5:
+                NormalTCell stringHtml
+                jmp ReturnC5
+
+            WhiteTC5:
+                WhiteTCell stringHtml
+                jmp ReturnC5
+
+            BlackTC5:
+                BlackTCell stringHtml
+                jmp ReturnC5
+
         ReturnC5:
         ; COLUMN 6
-            cmp fileContentX[05h], 56h
+            ; Empty Cell
+            cmp fileContentX[00h], 56h
                 je NormalC6
-            cmp fileContentX[05h], 57h
+            ; White Coin
+            cmp fileContentX[00h], 57h
                 je WhiteC6
-            cmp fileContentX[05h], 42h
+            ; Black Coin
+            cmp fileContentX[00h], 42h
                 je BlackC6
+            ; Neutral Territory
+            cmp fileContentX[00h], 55h
+                je NormalTC6
+            ; White Territory
+            cmp fileContentX[00h], 58h
+                je WhiteTC6
+            ; Black Territory
+            cmp fileContentX[00h], 43h
+                je BlackTC6
 
             NormalC6:
                 NormalCell stringHtml
@@ -1231,14 +1363,38 @@ endm
                 BlackCell stringHtml
                 jmp ReturnC6
 
+            NormalTC6:
+                NormalTCell stringHtml
+                jmp ReturnC6
+
+            WhiteTC6:
+                WhiteTCell stringHtml
+                jmp ReturnC6
+
+            BlackTC6:
+                BlackTCell stringHtml
+                jmp ReturnC6
+
         ReturnC6:
         ; COLUMN 7
-            cmp fileContentX[06h], 56h
+            ; Empty Cell
+            cmp fileContentX[00h], 56h
                 je NormalC7
-            cmp fileContentX[06h], 57h
+            ; White Coin
+            cmp fileContentX[00h], 57h
                 je WhiteC7
-            cmp fileContentX[06h], 42h
+            ; Black Coin
+            cmp fileContentX[00h], 42h
                 je BlackC7
+            ; Neutral Territory
+            cmp fileContentX[00h], 55h
+                je NormalTC7
+            ; White Territory
+            cmp fileContentX[00h], 58h
+                je WhiteTC7
+            ; Black Territory
+            cmp fileContentX[00h], 43h
+                je BlackTC7
 
             NormalC7:
                 NormalCell stringHtml
@@ -1252,14 +1408,38 @@ endm
                 BlackCell stringHtml
                 jmp ReturnC7
 
+            NormalTC7:
+                NormalTCell stringHtml
+                jmp ReturnC7
+
+            WhiteTC7:
+                WhiteTCell stringHtml
+                jmp ReturnC7
+
+            BlackTC7:
+                BlackTCell stringHtml
+                jmp ReturnC7
+
         ReturnC7:
         ; COLUMN 8
-            cmp fileContentX[07h], 56h
+            ; Empty Cell
+            cmp fileContentX[00h], 56h
                 je NormalC8
-            cmp fileContentX[07h], 57h
+            ; White Coin
+            cmp fileContentX[00h], 57h
                 je WhiteC8
-            cmp fileContentX[07h], 42h
+            ; Black Coin
+            cmp fileContentX[00h], 42h
                 je BlackC8
+            ; Neutral Territory
+            cmp fileContentX[00h], 55h
+                je NormalTC8
+            ; White Territory
+            cmp fileContentX[00h], 58h
+                je WhiteTC8
+            ; Black Territory
+            cmp fileContentX[00h], 43h
+                je BlackTC8
 
             NormalC8:
                 NormalCell stringHtml
@@ -1273,14 +1453,38 @@ endm
                 BlackCell stringHtml
                 jmp ReturnC8
 
+            NormalTC8:
+                NormalTCell stringHtml
+                jmp ReturnC8
+
+            WhiteTC8:
+                WhiteTCell stringHtml
+                jmp ReturnC8
+
+            BlackTC8:
+                BlackTCell stringHtml
+                jmp ReturnC8
+
         ReturnC8:
         ; COLUMN 9
-            cmp fileContentX[08h], 56h
+            ; Empty Cell
+            cmp fileContentX[00h], 56h
                 je NormalC9
-            cmp fileContentX[08h], 57h
+            ; White Coin
+            cmp fileContentX[00h], 57h
                 je WhiteC9
-            cmp fileContentX[08h], 42h
+            ; Black Coin
+            cmp fileContentX[00h], 42h
                 je BlackC9
+            ; Neutral Territory
+            cmp fileContentX[00h], 55h
+                je NormalTC9
+            ; White Territory
+            cmp fileContentX[00h], 58h
+                je WhiteTC9
+            ; Black Territory
+            cmp fileContentX[00h], 43h
+                je BlackTC9
 
             NormalC9:
                 NormalCell stringHtml
@@ -1292,6 +1496,18 @@ endm
 
             BlackC9:
                 BlackCell stringHtml
+                jmp ReturnC9
+
+            NormalTC9:
+                NormalTCell stringHtml
+                jmp ReturnC9
+
+            WhiteTC9:
+                WhiteTCell stringHtml
+                jmp ReturnC9
+
+            BlackTC9:
+                BlackTCell stringHtml
                 jmp ReturnC9
 
         ReturnC9:
@@ -1367,15 +1583,45 @@ endm
 
         ;htmlNeutralTCell db '<td><img src="tneutral.png"></td>'
         NeutralCell macro stringHtml
+            local RepeatNeutral
 
+            mov cx, SIZEOF htmlNeutralTCell
+            xor di, di
+
+            RepeatNeutral:
+                mov al, htmlNeutralTCell[di]
+                inc di
+                mov stringHtml[si], al
+                inc si
+            Loop RepeatNeutral
         endm
 
         WhiteTCell macro stringHtml
+            local RepeatWhiteT
 
+            mov cx, SIZEOF htmlWhiteTCell
+            xor di, di
+
+            RepeatWhiteT:
+                mov al, htmlWhiteTCell[di]
+                inc di
+                mov stringHtml[si], al
+                inc si
+            Loop RepeatWhiteT
         endm
 
         BlackTCell macro stringHtml
+            local RepeatBlackT
 
+            mov cx, SIZEOF htmlBlackTCell
+            xor di, di
+
+            RepeatBlackT:
+                mov al, htmlBlackTCell[di]
+                inc di
+                mov stringHtml[si], al
+                inc si
+            Loop RepeatBlackT
         endm
 
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

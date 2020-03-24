@@ -118,7 +118,7 @@ include macros.asm
     f0 db 13, 10,   '   A    B    C    D    E    F    G    H    I', 13, 10, '$'
 ; END OF TABLE
 
-; MATRIX. 56h -> Empty. 57h -> White. 42h -> Black
+; MATRIX. 56h -> Empty. 55h -> Neutral Territory | 57h -> White. 58h -> White Territory | 42h -> Black. 43h -> Black Territoy
     fileContent9 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
     fileContent8 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
     fileContent7 db 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 56h, 0dh, 0ah
