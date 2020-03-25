@@ -366,7 +366,7 @@ getCommand macro string, Nrow, Ncolumn
 endm
 
 ; PUT COIN IN A PLACE
-PutCoinMacro macro char
+PutCoinMacro macro char, coin
     local Row1, Row2, Row3, Row4, Row5, Row6, Row7, Row8, Row9
     local Column1, Column2, Column3, Column4, Column5, Column6, Column7, Column8, Column9
     local CompareColumns, CompareRows
@@ -451,35 +451,54 @@ PutCoinMacro macro char
             je Row9
     ; ASSIGN VALUES FOR ROWs
         Row1:
-            mov fileContent1[si], char
+            CellIsEmpty fileContent1[si], char
             jmp EndGC
         Row2:
-            mov fileContent2[si], char
+            CellIsEmpty fileContent2[si], char
             jmp EndGC
         Row3:
-            mov fileContent3[si], char
+            CellIsEmpty fileContent3[si], char
             jmp EndGC
         Row4:
-            mov fileContent4[si], char
+            CellIsEmpty fileContent4[si], char
             jmp EndGC
         Row5:
-            mov fileContent5[si], char
+            CellIsEmpty fileContent5[si], char
             jmp EndGC
         Row6:
-            mov fileContent6[si], char
+            CellIsEmpty fileContent6[si], char
             jmp EndGC
         Row7:
-            mov fileContent7[si], char
+            CellIsEmpty fileContent7[si], char
             jmp EndGC
         Row8:
-            mov fileContent8[si], char
+            CellIsEmpty fileContent8[si], char
             jmp EndGC
         Row9:
-            mov fileContent9[si], char
+            CellIsEmpty fileContent9[si], char
             jmp EndGC
     
     EndGC:
+        PrintCoin coin
         Popear        
+endm
+
+CellIsEmpty macro string, char
+    local PutChar
+    cmp string, 56h
+        je PutChar
+    jmp invalidCellM
+    PutChar:
+        mov string, char
+endm
+
+CheckLiberties macro
+
+endm
+
+PrintCoin macro coin
+    moveCursor row, column
+    print coin
 endm
 
 ; Move cursor
@@ -1086,15 +1105,15 @@ endm
     RepeatRow macro stringHtml, fileContentX
         local RepeatHTMLRow1, RepeatHTMLRow2, RepeatAnalize, ReturnAnalize, PNormalCell, PWhiteCell, PBlackCell
         local ReturnC1, ReturnC2, ReturnC3, ReturnC4, ReturnC5, ReturnC6, ReturnC7, ReturnC8, ReturnC9
-        local NormalC1, WhiteC1, BlackC1
-        local NormalC2, WhiteC2, BlackC2
-        local NormalC3, WhiteC3, BlackC3
-        local NormalC4, WhiteC4, BlackC4
-        local NormalC5, WhiteC5, BlackC5
-        local NormalC6, WhiteC6, BlackC6
-        local NormalC7, WhiteC7, BlackC7
-        local NormalC8, WhiteC8, BlackC8
-        local NormalC9, WhiteC9, BlackC9
+        local NormalC1, WhiteC1, BlackC1, NormalTC1, WhiteTC1, BlackTC1
+        local NormalC2, WhiteC2, BlackC2, NormalTC2, WhiteTC2, BlackTC2
+        local NormalC3, WhiteC3, BlackC3, NormalTC3, WhiteTC3, BlackTC3
+        local NormalC4, WhiteC4, BlackC4, NormalTC4, WhiteTC4, BlackTC4
+        local NormalC5, WhiteC5, BlackC5, NormalTC5, WhiteTC5, BlackTC5
+        local NormalC6, WhiteC6, BlackC6, NormalTC6, WhiteTC6, BlackTC6
+        local NormalC7, WhiteC7, BlackC7, NormalTC7, WhiteTC7, BlackTC7
+        local NormalC8, WhiteC8, BlackC8, NormalTC8, WhiteTC8, BlackTC8
+        local NormalC9, WhiteC9, BlackC9, NormalTC9, WhiteTC9, BlackTC9
         local Fin
         mov cx, SIZEOF htmlBeginRow
         xor di, di
@@ -1153,22 +1172,22 @@ endm
         ReturnC1:
         ; COLUMN 2
             ; Empty Cell
-            cmp fileContentX[00h], 56h
+            cmp fileContentX[01h], 56h
                 je NormalC2
             ; White Coin
-            cmp fileContentX[00h], 57h
+            cmp fileContentX[01h], 57h
                 je WhiteC2
             ; Black Coin
-            cmp fileContentX[00h], 42h
+            cmp fileContentX[01h], 42h
                 je BlackC2
             ; Neutral Territory
-            cmp fileContentX[00h], 55h
+            cmp fileContentX[01h], 55h
                 je NormalTC2
             ; White Territory
-            cmp fileContentX[00h], 58h
+            cmp fileContentX[01h], 58h
                 je WhiteTC2
             ; Black Territory
-            cmp fileContentX[00h], 43h
+            cmp fileContentX[01h], 43h
                 je BlackTC2
 
             NormalC2:
@@ -1198,22 +1217,22 @@ endm
         ReturnC2:
         ; COLUMN 3
             ; Empty Cell
-            cmp fileContentX[00h], 56h
+            cmp fileContentX[02h], 56h
                 je NormalC3
             ; White Coin
-            cmp fileContentX[00h], 57h
+            cmp fileContentX[02h], 57h
                 je WhiteC3
             ; Black Coin
-            cmp fileContentX[00h], 42h
+            cmp fileContentX[02h], 42h
                 je BlackC3
             ; Neutral Territory
-            cmp fileContentX[00h], 55h
+            cmp fileContentX[02h], 55h
                 je NormalTC3
             ; White Territory
-            cmp fileContentX[00h], 58h
+            cmp fileContentX[02h], 58h
                 je WhiteTC3
             ; Black Territory
-            cmp fileContentX[00h], 43h
+            cmp fileContentX[02h], 43h
                 je BlackTC3
 
             NormalC3:
@@ -1243,22 +1262,22 @@ endm
         ReturnC3:
         ; COLUMN 4
             ; Empty Cell
-            cmp fileContentX[00h], 56h
+            cmp fileContentX[03h], 56h
                 je NormalC4
             ; White Coin
-            cmp fileContentX[00h], 57h
+            cmp fileContentX[03h], 57h
                 je WhiteC4
             ; Black Coin
-            cmp fileContentX[00h], 42h
+            cmp fileContentX[03h], 42h
                 je BlackC4
             ; Neutral Territory
-            cmp fileContentX[00h], 55h
+            cmp fileContentX[03h], 55h
                 je NormalTC4
             ; White Territory
-            cmp fileContentX[00h], 58h
+            cmp fileContentX[03h], 58h
                 je WhiteTC4
             ; Black Territory
-            cmp fileContentX[00h], 43h
+            cmp fileContentX[03h], 43h
                 je BlackTC4
 
             NormalC4:
@@ -1288,22 +1307,22 @@ endm
         ReturnC4:
         ; COLUMN 5
             ; Empty Cell
-            cmp fileContentX[00h], 56h
+            cmp fileContentX[04h], 56h
                 je NormalC5
             ; White Coin
-            cmp fileContentX[00h], 57h
+            cmp fileContentX[04h], 57h
                 je WhiteC5
             ; Black Coin
-            cmp fileContentX[00h], 42h
+            cmp fileContentX[04h], 42h
                 je BlackC5
             ; Neutral Territory
-            cmp fileContentX[00h], 55h
+            cmp fileContentX[04h], 55h
                 je NormalTC5
             ; White Territory
-            cmp fileContentX[00h], 58h
+            cmp fileContentX[04h], 58h
                 je WhiteTC5
             ; Black Territory
-            cmp fileContentX[00h], 43h
+            cmp fileContentX[04h], 43h
                 je BlackTC5
 
             NormalC5:
@@ -1333,22 +1352,22 @@ endm
         ReturnC5:
         ; COLUMN 6
             ; Empty Cell
-            cmp fileContentX[00h], 56h
+            cmp fileContentX[05h], 56h
                 je NormalC6
             ; White Coin
-            cmp fileContentX[00h], 57h
+            cmp fileContentX[05h], 57h
                 je WhiteC6
             ; Black Coin
-            cmp fileContentX[00h], 42h
+            cmp fileContentX[05h], 42h
                 je BlackC6
             ; Neutral Territory
-            cmp fileContentX[00h], 55h
+            cmp fileContentX[05h], 55h
                 je NormalTC6
             ; White Territory
-            cmp fileContentX[00h], 58h
+            cmp fileContentX[05h], 58h
                 je WhiteTC6
             ; Black Territory
-            cmp fileContentX[00h], 43h
+            cmp fileContentX[05h], 43h
                 je BlackTC6
 
             NormalC6:
@@ -1378,22 +1397,22 @@ endm
         ReturnC6:
         ; COLUMN 7
             ; Empty Cell
-            cmp fileContentX[00h], 56h
+            cmp fileContentX[06h], 56h
                 je NormalC7
             ; White Coin
-            cmp fileContentX[00h], 57h
+            cmp fileContentX[06h], 57h
                 je WhiteC7
             ; Black Coin
-            cmp fileContentX[00h], 42h
+            cmp fileContentX[06h], 42h
                 je BlackC7
             ; Neutral Territory
-            cmp fileContentX[00h], 55h
+            cmp fileContentX[06h], 55h
                 je NormalTC7
             ; White Territory
-            cmp fileContentX[00h], 58h
+            cmp fileContentX[06h], 58h
                 je WhiteTC7
             ; Black Territory
-            cmp fileContentX[00h], 43h
+            cmp fileContentX[06h], 43h
                 je BlackTC7
 
             NormalC7:
@@ -1423,22 +1442,22 @@ endm
         ReturnC7:
         ; COLUMN 8
             ; Empty Cell
-            cmp fileContentX[00h], 56h
+            cmp fileContentX[07h], 56h
                 je NormalC8
             ; White Coin
-            cmp fileContentX[00h], 57h
+            cmp fileContentX[07h], 57h
                 je WhiteC8
             ; Black Coin
-            cmp fileContentX[00h], 42h
+            cmp fileContentX[07h], 42h
                 je BlackC8
             ; Neutral Territory
-            cmp fileContentX[00h], 55h
+            cmp fileContentX[07h], 55h
                 je NormalTC8
             ; White Territory
-            cmp fileContentX[00h], 58h
+            cmp fileContentX[07h], 58h
                 je WhiteTC8
             ; Black Territory
-            cmp fileContentX[00h], 43h
+            cmp fileContentX[07h], 43h
                 je BlackTC8
 
             NormalC8:
@@ -1468,22 +1487,22 @@ endm
         ReturnC8:
         ; COLUMN 9
             ; Empty Cell
-            cmp fileContentX[00h], 56h
+            cmp fileContentX[09h], 56h
                 je NormalC9
             ; White Coin
-            cmp fileContentX[00h], 57h
+            cmp fileContentX[09h], 57h
                 je WhiteC9
             ; Black Coin
-            cmp fileContentX[00h], 42h
+            cmp fileContentX[09h], 42h
                 je BlackC9
             ; Neutral Territory
-            cmp fileContentX[00h], 55h
+            cmp fileContentX[09h], 55h
                 je NormalTC9
             ; White Territory
-            cmp fileContentX[00h], 58h
+            cmp fileContentX[09h], 58h
                 je WhiteTC9
             ; Black Territory
-            cmp fileContentX[00h], 43h
+            cmp fileContentX[09h], 43h
                 je BlackTC9
 
             NormalC9:
@@ -1582,7 +1601,7 @@ endm
         ;htmlWhiteTCell db '<td><img src="twhite.png"></td>'
 
         ;htmlNeutralTCell db '<td><img src="tneutral.png"></td>'
-        NeutralCell macro stringHtml
+        NormalTCell macro stringHtml
             local RepeatNeutral
 
             mov cx, SIZEOF htmlNeutralTCell

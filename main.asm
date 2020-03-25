@@ -13,6 +13,12 @@ include macros.asm
     newLine db 13, 10, '$'
     cleanChar db '             ', '$'
     errorCmd db 'Comando de juego invalido', '$'
+
+    invalidCell db 'Movimiento invalido, celda ocupada', '$'
+    suicideMove db 'Movimiento suicida no valido', '$'
+    koRule db 'Violacion a la regla ko', '$'
+
+    removeCoin db '  ', '$'
     countT dw 00h
 ; END SPECIAL CHARACTER
 
@@ -145,7 +151,6 @@ main proc
 
     ; PRINCIPAL MENU
     PrincipalMenu:
-        ;CleanRows
         ClearConsole
         moveCursor 00h, 00h
         print header
@@ -160,6 +165,7 @@ main proc
             je Exit
     
     Game:        
+        mov actualTurn, 66
         ; Cleaning the count of passing when a person plays
         mov countT, 00h
         print newLine
@@ -167,6 +173,7 @@ main proc
         jmp Playing
     ; Probado
     LoadGame:
+        mov actualTurn, 66
         mov countT, 00h
         print newLine
         print msgRoute
@@ -208,7 +215,7 @@ main proc
         ; EXIT. DONE
         cmp row, 4fh
             je EXITGAME
-        ; PASS. DONE 0.5 (CHECK IF BOTH PLAYERS PASS)
+        ; PASS
         cmp row, 54h
             je PASSTURN
         ; SAVE GAME.
@@ -217,32 +224,29 @@ main proc
         ; SHOW GAME.
         cmp row, 53h
             je SHOWGAME
-        ; INVALID COMMAND. DONE
+        ; INVALID COMMAND
         cmp row, 43h
             je INVALIDCOMMAND
         
-        moveCursor row, column
         ; COMPARE WHO IS PLAYING
         cmp actualTurn, 66
             je PutBlackCoin
-        jmp PutWhiteCoin  
-    PutBlackCoin:
+        jmp PutWhiteCoin
+    PutBlackCoin:        
+        ; VALIDATE THE POSITION AND PRINT IN THE POSITION THE COIN
+        PutCoinMacro 42h, blackCoin
         ; Cleaning the count of passing when a person plays
         mov countT, 00h
-        ; PRINT IN THE POSITION THE COIN
-        print blackCoin
-        PutCoinMacro 42h
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 87
         moveCursor 00h, 00h
         print whitesTurn
         jmp Playing
-    PutWhiteCoin:
+    PutWhiteCoin:        
+        ; VALIDATE THE POSITION AND PRINT IN THE POSITION THE COIN
+        PutCoinMacro 57h, whiteCoin
         ; Cleaning the count of passing when a person plays
         mov countT, 00h
-        ; PRINT IN THE POSITION THE COIN
-        print whiteCoin
-        PutCoinMacro 57h
         ; PASSING THE TURN TO THE OTHER PLAYER
         mov actualTurn, 66
         moveCursor 00h, 00h
@@ -387,6 +391,36 @@ main proc
             print cleanChar
             print cleanChar        
             jmp PrincipalMenu
+        SuicidalMove:
+            moveCursor 01h, 00h
+            print suicideMove
+            getChar
+            moveCursor 01h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar     
+            print cleanChar   
+            jmp Playing
+        KoRuleMsg:
+            moveCursor 01h, 00h
+            print koRule            
+            getChar
+            moveCursor 01h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar
+            print cleanChar
+            jmp Playing
+        invalidCellM:
+            moveCursor 01h, 00h
+            print invalidCell
+            getChar
+            moveCursor 01h, 00h
+            print cleanChar
+            print cleanChar
+            print cleanChar   
+            print cleanChar     
+            jmp Playing
 main endp
 
 end
