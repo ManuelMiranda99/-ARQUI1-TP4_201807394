@@ -151,7 +151,6 @@ main proc
 
     ; PRINCIPAL MENU
     PrincipalMenu:
-        ;CleanRows
         ClearConsole
         moveCursor 00h, 00h
         print header
@@ -166,6 +165,7 @@ main proc
             je Exit
     
     Game:        
+        mov actualTurn, 66
         ; Cleaning the count of passing when a person plays
         mov countT, 00h
         print newLine
@@ -173,6 +173,7 @@ main proc
         jmp Playing
     ; Probado
     LoadGame:
+        mov actualTurn, 66
         mov countT, 00h
         print newLine
         print msgRoute
@@ -214,7 +215,7 @@ main proc
         ; EXIT. DONE
         cmp row, 4fh
             je EXITGAME
-        ; PASS. DONE 0.5 (CHECK IF BOTH PLAYERS PASS)
+        ; PASS
         cmp row, 54h
             je PASSTURN
         ; SAVE GAME.
@@ -223,7 +224,7 @@ main proc
         ; SHOW GAME.
         cmp row, 53h
             je SHOWGAME
-        ; INVALID COMMAND. DONE
+        ; INVALID COMMAND
         cmp row, 43h
             je INVALIDCOMMAND
         
